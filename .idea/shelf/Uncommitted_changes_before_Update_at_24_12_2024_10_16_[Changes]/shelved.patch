@@ -1,0 +1,75 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"a3601675-755c-4fe8-95df-484371bda74a\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.gitignore\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/gradle.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/build.gradle\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/gradlew\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/gradlew.bat\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/settings.gradle\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/AppController.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/ServingWebContentApplication.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/resources/templates/list.html\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExternalProjectsData\">\r\n    <projectState path=\"$PROJECT_DIR$\">\r\n      <ProjectState />\r\n    </projectState>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2qek5PXbIifVW9gII8u22tDC9Qa\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Gradle.Progetto_ValidazioneSW [:ServingWebContentApplication.main()].executor&quot;: &quot;Run&quot;,\r\n    &quot;Gradle.Progetto_ValidazioneSW.executor&quot;: &quot;Run&quot;,\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;master&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/miche/Desktop/Progettazione/Progetto_ValidazioneSW/src/main/resources/templates&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\miche\\Desktop\\Progettazione\\Progetto_ValidazioneSW\\src\\main\\resources\\templates\" />\r\n    </key>\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.ServingWebContentApplication\">\r\n    <configuration name=\"ServingWebContentApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"demo.ServingWebContentApplication\" />\r\n      <module name=\"Progetto_ValidazioneSW.main\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"Progetto_ValidazioneSW\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list />\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>\r\n      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>\r\n      <DebugAllEnabled>false</DebugAllEnabled>\r\n      <RunAsTest>false</RunAsTest>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Gradle.Progetto_ValidazioneSW\" />\r\n        <item itemvalue=\"Application.ServingWebContentApplication\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-15.0.2-corretto-15.0.2-4caba194b151-9bc2d75a\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"a3601675-755c-4fe8-95df-484371bda74a\" name=\"Changes\" comment=\"\" />\r\n      <created>1735030246924</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1735030246924</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision b369099f581a10fe554b78d9974a7815509a3ad4)
++++ b/.idea/workspace.xml	(date 1735031763062)
+@@ -4,22 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="a3601675-755c-4fe8-95df-484371bda74a" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/AppController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/ServingWebContentApplication.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/list.html" afterDir="false" />
+-    </list>
++    <list default="true" id="a3601675-755c-4fe8-95df-484371bda74a" name="Changes" comment="first commit" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -29,10 +14,30 @@
+     <projectState path="$PROJECT_DIR$">
+       <ProjectState />
+     </projectState>
++  </component>
++  <component name="ExternalProjectsManager">
++    <system id="GRADLE">
++      <state>
++        <projects_view>
++          <tree_state>
++            <expand>
++              <path>
++                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
++                <item name="Progetto_ValidazioneSW" type="f1a62948:ProjectNode" />
++              </path>
++            </expand>
++            <select />
++          </tree_state>
++        </projects_view>
++      </state>
++    </system>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
++  </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 0
+ }</component>
+@@ -59,6 +64,9 @@
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Users\miche\Desktop\Progettazione\Progetto_ValidazioneSW\src\main\resources\templates" />
++    </key>
++    <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\miche\Desktop\Progettazione\Progetto_ValidazioneSW" />
+     </key>
+     <key name="CopyClassDialog.RECENTS_KEY">
+       <recent name="" />
