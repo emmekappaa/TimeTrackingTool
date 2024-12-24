@@ -1,0 +1,83 @@
+/* Impostazioni di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sfondo globale */
+body {
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+/* Contenitore del login */
+.login-container {
+    background-color: #2d2d2d;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Titolo del login */
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #f0a500;
+}
+
+/* Stile dei campi di input */
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #3e3e3e;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #f0a500;
+    outline: none;
+    background-color: #4a4a4a;
+}
+
+/* Bottone di login */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #f0a500;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #e08700;
+}
+
+/* Messaggio di errore */
+.error-message {
+    margin-top: 15px;
+    color: #e74c3c;
+    font-size: 0.9rem;
+}
+
+/* Effetto di hover sui campi di input */
+.input-field:hover {
+    border-color: #f0a500;
+}
