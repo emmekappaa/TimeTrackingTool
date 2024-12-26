@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Researcher</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.5/fullcalendar.min.css">
+</head>
+<body>
+
+<!-- Saluto all'utente -->
+<div id="greeting-container">
+    <h2 id="greeting">Buongiorno, <span id="username" th:text="${username}">Utente</span>!</h2>
+</div>
+
+<!-- Link di logout -->
+<a href="/homeResearcher/logout" id="logout-link">Logout</a>
+
+<div id="calendar"></div>
+
+<div class="form-container" id="form-container">
+    <h3>Compila le ore</h3>
+    <form id="time-form">
+        <input type="hidden" id="selected-date">
+        <p id="selected-date-display"></p>
+        <label for="task">Attività:</label>
+        <input type="text" id="task" placeholder="Descrivi l'attività..." required>
+        <label for="hours">Ore:</label>
+        <input type="number" id="hours" min="0" max="24" step="0.5" required>
+        <button type="submit">Invia</button>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.5/fullcalendar.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('calendar');
+        const formContainer = document.getElementById('form-container');
+        const selectedDateInput = document.getElementById('selected-date');
+        const selectedDateDisplay = document.getElementById('selected-date-display');
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'it',
+            dateClick: function(info) {
+                // Mostra il form e imposta la data selezionata
+                formContainer.style.display = 'block';
+                selectedDateInput.value = info.dateStr;
+                selectedDateDisplay.textContent = `Data: ${info.dateStr}`;
+            }
+        });
+
+        calendar.render();
+
+        document.getElementById('time-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const date = selectedDateInput.value;
+            const task = document.getElementById('task').value;
+            const hours = document.getElementById('hours').value;
+
+            alert(`Data: ${date}\nAttività: ${task}\nOre: ${hours}`);
+
+            // Reset form e nascondi il container
+            this.reset();
+            formContainer.style.display = 'none';
+        });
+    });
+</script>
+</body>
+</html>

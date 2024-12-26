@@ -1,8 +1,7 @@
-package demo;
+package demo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 import java.util.List;
 @Entity
