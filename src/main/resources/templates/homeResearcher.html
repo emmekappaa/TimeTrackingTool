@@ -17,6 +17,16 @@
 <!-- Link di logout -->
 <a href="/homeResearcher/logout" id="logout-link">Logout</a>
 
+<!-- Elenco dei progetti a cui partecipa il ricercatore -->
+<div id="projects">
+    <h3>I tuoi progetti:</h3>
+    <ul>
+        <li th:each="project : ${researcherProjects}">
+            <span th:text="${project.name}">Nome del progetto</span>
+        </li>
+    </ul>
+</div>
+
 <div id="calendar"></div>
 
 <div class="form-container" id="form-container">
