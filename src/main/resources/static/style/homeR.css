@@ -1,49 +1,157 @@
-/* style.css */
-body {
-    font-family: Arial, sans-serif;
+/* Impostazioni di base */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sfondo globale */
+body {
+    background-color: #f5f5f5;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f4f4f9;
-}
-
-#calendar {
-    width: 80%;
-    margin: 20px 0;
-}
-
-.form-container {
-    display: none;
-    background-color: #fff;
+    justify-content: flex-start;
+    height: 100vh;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    width: 300px;
+}
+
+/* Link di logout */
+#logout-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#logout-link:hover {
+    color: #0056b3;
+}
+
+/* Contenitore principale */
+.main-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
     text-align: center;
 }
 
-.form-container label {
-    display: block;
-    margin: 10px 0 5px;
+/* Intestazione */
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #007BFF;
 }
 
-.form-container input {
+/* Informazioni sulla data e meteo */
+.info-container {
+    margin-bottom: 30px;
+}
+
+.info-container h2 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.info-container p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Tabella per registrare ore e progetti */
+table {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.form-container button {
-    padding: 10px;
-    background-color: #007bff;
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+th {
+    background-color: #007BFF;
     color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-.form-container button:hover {
+/* Modifica per le righe della tabella */
+td input, td select {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    color: #333;
+}
+
+td button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+td button:hover {
     background-color: #0056b3;
+}
+
+/* Aggiunta della tabella delle ore lavorate oggi */
+h3 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+table th {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Stile per la tabella delle ore lavorate oggi */
+table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* Link nella parte inferiore */
+.links-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.links-container .link {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.links-container .link:hover {
+    color: #0056b3;
 }

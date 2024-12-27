@@ -8,20 +8,20 @@
 
 /* Sfondo globale */
 body {
-    background-color: #1a1a1a;
+    background-color: #f5f5f5; /* Bianco sporco */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: white;
+    color: #333;
 }
 
 /* Contenitore del login */
 .login-container {
-    background-color: #2d2d2d;
+    background-color: #ffffff; /* Bianco */
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     text-align: center;
@@ -31,7 +31,7 @@ body {
 h2 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #f0a500;
+    color: #007BFF; /* Azzurro */
 }
 
 /* Stile dei campi di input */
@@ -39,25 +39,25 @@ h2 {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    background-color: #3e3e3e;
-    border: 1px solid #555;
+    background-color: #f9f9f9; /* Grigio chiaro */
+    border: 1px solid #ddd;
     border-radius: 5px;
-    color: white;
+    color: #333;
     font-size: 1rem;
     transition: all 0.3s ease;
 }
 
 .input-field:focus {
-    border-color: #f0a500;
+    border-color: #007BFF; /* Azzurro */
     outline: none;
-    background-color: #4a4a4a;
+    background-color: #ffffff;
 }
 
 /* Bottone di login */
 .login-btn {
     width: 100%;
     padding: 12px;
-    background-color: #f0a500;
+    background-color: #007BFF; /* Azzurro */
     border: none;
     border-radius: 5px;
     font-size: 1.2rem;
@@ -67,7 +67,7 @@ h2 {
 }
 
 .login-btn:hover {
-    background-color: #e08700;
+    background-color: #0056b3; /* Azzurro scuro */
 }
 
 /* Messaggio di errore */
@@ -79,5 +79,5 @@ h2 {
 
 /* Effetto di hover sui campi di input */
 .input-field:hover {
-    border-color: #f0a500;
+    border-color: #007BFF; /* Azzurro */
 }

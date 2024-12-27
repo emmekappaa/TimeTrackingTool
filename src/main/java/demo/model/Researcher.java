@@ -1,14 +1,16 @@
 package demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 import java.util.List;
 @Entity
 public class Researcher extends Person {
-    @OneToMany
+    @ManyToMany
     private List<Project> participatingProjects;
-    @OneToMany
+    @ManyToMany
     private List<Project> addedProjects;
 
     protected Researcher(){

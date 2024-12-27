@@ -40,5 +40,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
         */
         p.save(new Project("ProjectZomboide","29/04/2002","29/04/2025",m1,list_r));
+        p.save(new Project("Startx","29/04/2002","29/04/2025",m1,list_r));
+        p.save(new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r));
+        p.save(new Project("FilesMans","29/04/2002","29/04/2025",m1,list_r));
     }
 }

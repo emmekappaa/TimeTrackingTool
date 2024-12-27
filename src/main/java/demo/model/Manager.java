@@ -6,6 +6,9 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 @Entity
 public class Manager extends Person {
+
+    //Un Manager può gestire molti progetti.
+    //Ogni progetto è assegnato a un solo manager.
     @OneToMany
     private List<Project> assignedProjects;
 

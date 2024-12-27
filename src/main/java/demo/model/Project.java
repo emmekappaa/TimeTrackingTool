@@ -8,13 +8,19 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    public long id;
     private String name;
     private String startDate;
     private String endDate;
-    @OneToOne
+
+    //Un progetto è gestito da un solo manager.
+    //Un manager può gestire molti progetti.
+    @ManyToOne
     private Manager manager;
-    @OneToMany
+
+    //Un progetto può coinvolgere molti ricercatori.
+    //Un ricercatore può partecipare a molti progetti.
+    @ManyToMany
     private List<Researcher> researchers;
 
     protected Project(){}
@@ -25,6 +31,15 @@ public class Project {
         this.manager = manager;
         this.researchers = researchers;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
