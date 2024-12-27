@@ -11,4 +11,5 @@ import java.util.Collection;
 public interface TimeLogRepository extends CrudRepository<TimeLog, Long> {
 
     Collection<TimeLog> findAllByPersonAndDate(Person loggedInUser, LocalDate today);
+    Collection<TimeLog> findAllByPerson(Person loggedInUser);
 }

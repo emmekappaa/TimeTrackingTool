@@ -78,6 +78,11 @@ public class HomeResearcherController {
         return "redirect:/";
     }
 
+    @RequestMapping("/hoursHistoryResearcher")
+    public String hoursHistory() {
+        return "/hoursHistoryResearcher";
+    }
+
     @PostMapping("/addTimeLog")
     public String addTimeLog(@RequestParam("hoursWorked") double hoursWorked, @RequestParam("projectId") long projectId, HttpSession session,Model model, RedirectAttributes redirectAttributes) {
 

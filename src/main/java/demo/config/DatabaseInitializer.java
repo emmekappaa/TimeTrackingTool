@@ -1,16 +1,14 @@
 package demo.config;
 
-import demo.model.Manager;
-import demo.model.Person;
-import demo.model.Project;
+import demo.model.*;
 import demo.repository.ProjectRepository;
 import demo.repository.Repository;
-import demo.model.Researcher;
 import demo.repository.TimeLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Component
@@ -39,9 +37,15 @@ public class DatabaseInitializer implements CommandLineRunner {
             System.out.println(r1.getFirstName());
         }
         */
-        p.save(new Project("ProjectZomboide","29/04/2002","29/04/2025",m1,list_r));
-        p.save(new Project("Startx","29/04/2002","29/04/2025",m1,list_r));
-        p.save(new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r));
-        p.save(new Project("FilesMans","29/04/2002","29/04/2025",m1,list_r));
+        Project p1 = new Project("ProjectZomboide","29/04/2002","29/04/2025",m1,list_r);
+        Project p2 = new Project("Startx","29/04/2002","29/04/2025",m1,list_r);
+        Project p3 = new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r);
+        Project p4 = new Project("FilesMans","29/04/2002","29/04/2025",m1,list_r);
+        p.save(p1);
+        p.save(p2);
+        p.save(p3);
+        p.save(p4);
+        t.save(new TimeLog(r1, p1, LocalDate.of(2024,12,18), 4));
+        t.save(new TimeLog(r1, p3, LocalDate.of(2014,10,1), 7));
     }
 }
