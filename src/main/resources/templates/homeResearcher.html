@@ -14,7 +14,7 @@
 <div class="main-container">
     <!-- Intestazione -->
     <header>
-        <h1>Benvenuto, <span id="username" th:text="${username}">Mario Rossi</span></h1>
+        <h1>Welcome, <span id="username" th:text="${username}">Mario Rossi</span></h1>
     </header>
 
     <!-- Informazioni sulla data e meteo -->
@@ -32,33 +32,33 @@
         <table>
             <thead>
             <tr>
-                <th>Ore Lavorate</th>
-                <th>Progetto</th>
-                <th>Azione</th>
+                <th>Hours Worked</th>
+                <th>Project</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody id="work-hours-table">
             <tr>
-                <td><input type="number" name="hoursWorked" min="1" max="24" step="1" placeholder="Ore"></td>
+                <td><input type="number" name="hoursWorked" min="1" max="24" step="1" placeholder="Hours"></td>
                 <td>
                     <select name="projectId">
-                        <option value="" disabled selected>Scegli un progetto</option>
+                        <option value="" disabled selected>Choose a project</option>
                         <option th:each="project : ${researcherProjects}" th:value="${project.id}" th:text="${project.name}">Progetto X</option>
                     </select>
                 </td>
-                <td><button type="submit">Aggiungi</button></td>
+                <td><button type="submit">Add</button></td>
             </tr>
             </tbody>
         </table>
     </form>
 
     <!-- Tabella per le ore lavorate oggi -->
-    <h3>Ore Lavorate Oggi</h3>
+    <h3>Hours Worked Today</h3>
     <table>
         <thead>
         <tr>
-            <th>Progetto</th>
-            <th>Ore</th>
+            <th>Project</th>
+            <th>Hours</th>
         </tr>
         </thead>
         <tbody>
@@ -71,9 +71,9 @@
 
     <!-- Link nella parte inferiore -->
     <div class="links-container">
-        <a href="/projects" class="link">Consulta Lista Progetti</a>
-        <a href="/hours/history" class="link">Consulta Storico Ore</a>
-        <a href="/monthly/report" class="link">Consulta Rendicontazione Mensile</a>
+        <a href="/projects" class="link">View Projects List</a>
+        <a href="/hours/history" class="link">History Hours</a>
+        <a href="/monthly/report" class="link">Monthly Reporting</a>
     </div>
 </div>
 </body>

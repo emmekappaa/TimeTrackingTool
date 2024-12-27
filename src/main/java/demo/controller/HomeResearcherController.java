@@ -63,6 +63,12 @@ public class HomeResearcherController {
         }
         model.addAttribute("researcherProjects", researcherProjects);
 
+        ArrayList<TimeLog> timeLogsToday = new ArrayList<>();
+        for (TimeLog t : timeLogRepository.findAllByPersonAndDate(loggedInUser, today)) {
+            timeLogsToday.add(t);
+        }
+        model.addAttribute("timeLogsToday", timeLogsToday);
+
         return "homeResearcher";
     }
 
@@ -91,7 +97,7 @@ public class HomeResearcherController {
 
             if (totalHoursWorkedToday + hoursWorked > 8) {
 
-                redirectAttributes.addFlashAttribute("error", "Non puoi registrare più di 8 ore lavorative in un giorno.");
+                redirectAttributes.addFlashAttribute("error", "You cannot log more than 8 working hours in a day.");
                 ArrayList<TimeLog> timeLogsToday = new ArrayList<>();
                 for (TimeLog t : timeLogRepository.findAllByPersonAndDate(loggedInUser, today)) {
                     timeLogsToday.add(t);

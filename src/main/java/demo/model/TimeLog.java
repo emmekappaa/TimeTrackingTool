@@ -11,11 +11,9 @@ public class TimeLog {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "project_id")
     private Project project;
 
     private LocalDate date;
