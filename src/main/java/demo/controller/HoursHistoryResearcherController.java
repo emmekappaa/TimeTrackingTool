@@ -48,8 +48,11 @@ public class HoursHistoryResearcherController {
         return "hoursHistoryResearcher";
     }
 
+    /*
     @RequestMapping("/homeResearcher")
     public String backHome() {
         return "homeResearcher";
     }
+    */
+
 }

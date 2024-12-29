@@ -3,6 +3,7 @@ package demo.controller;
 import demo.model.Researcher;
 import demo.repository.Repository;
 import demo.model.Person;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login")
     public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
+
         Person person = repository.findByUsername(username);
         System.out.println(username);
         System.out.println(password);

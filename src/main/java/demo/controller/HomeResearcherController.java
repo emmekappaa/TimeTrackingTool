@@ -78,10 +78,13 @@ public class HomeResearcherController {
         return "redirect:/";
     }
 
+    /* inutile viene gia chiamata la pagina con il suo controllore
     @RequestMapping("/hoursHistoryResearcher")
     public String hoursHistory() {
+        System.out.println("QUI QUI");
         return "/hoursHistoryResearcher";
     }
+    */
 
     @PostMapping("/addTimeLog")
     public String addTimeLog(@RequestParam("hoursWorked") double hoursWorked, @RequestParam("projectId") long projectId, HttpSession session,Model model, RedirectAttributes redirectAttributes) {
