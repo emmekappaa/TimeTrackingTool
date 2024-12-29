@@ -12,16 +12,18 @@ public abstract class Person {
     protected String username;
     protected String firstName;
     protected String lastName;
+    protected String cf;
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     protected int id;
     protected String password;
     protected Person(){}
-    public Person(String username, String firstName, String lastName, String password) {
+    public Person(String username, String firstName, String lastName, String password, String cf) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.cf = cf;
     }
 
     public String getUsername() {
@@ -59,6 +61,10 @@ public abstract class Person {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getCf() {return cf;}
+
+    public void setCf(String cf) {this.cf = cf;}
 
     @Override
     public boolean equals(Object o) {

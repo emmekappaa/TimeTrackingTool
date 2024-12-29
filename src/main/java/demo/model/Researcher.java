@@ -16,8 +16,8 @@ public class Researcher extends Person {
     protected Researcher(){
         super();
     }
-    public Researcher(String firstName, String lastName, String username, String password) {
-        super(username, firstName, lastName, password);
+    public Researcher(String firstName, String lastName, String username, String password,String cf) {
+        super(username, firstName, lastName, password, cf);
     }
 
     public List<Project> getParticipatingProjects() {

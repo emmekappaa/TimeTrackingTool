@@ -49,14 +49,14 @@ public class ReportController {
 
         if (project != null) {
             model.addAttribute("projectTitle", project.getName());
-            model.addAttribute("clup", "859598595");
-            model.addAttribute("projectCode", "DKN03030");
-            model.addAttribute("organizationName", "UNIVR");
+            model.addAttribute("cup", project.getCup());
+            model.addAttribute("projectCode", project.getProjectCode());
+            model.addAttribute("organizationName", project.getOrganizationName());
         }
 
         model.addAttribute("researcherName", loggedInUser.getFirstName());
         model.addAttribute("researcherSurname", loggedInUser.getLastName());
-        model.addAttribute("fiscalCode", "CPRMHL02");
+        model.addAttribute("fiscalCode", loggedInUser.getCf());
         model.addAttribute("selectedMonth", month);
         model.addAttribute("selectedYear", year);
 

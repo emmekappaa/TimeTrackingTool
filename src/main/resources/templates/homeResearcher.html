@@ -39,9 +39,9 @@
             </thead>
             <tbody id="work-hours-table">
             <tr>
-                <td><input type="number" name="hoursWorked" min="1" max="24" step="1" placeholder="Hours"></td>
+                <td><input type="number" name="hoursWorked" min="1" max="24" step="1" placeholder="Hours" required></td>
                 <td>
-                    <select name="projectId">
+                    <select name="projectId" required>
                         <option value="" disabled selected>Choose a project</option>
                         <option th:each="project : ${researcherProjects}" th:value="${project.id}" th:text="${project.name}">Progetto X</option>
                     </select>

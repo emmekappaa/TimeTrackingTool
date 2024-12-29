@@ -16,8 +16,8 @@ public class Manager extends Person {
         super();
     }
 
-    public Manager(String firstName, String lastName, String username, String password) {
-        super(username, firstName, lastName, password);
+    public Manager(String firstName, String lastName, String username, String password, String cf) {
+        super(username, firstName, lastName, password, cf);
     }
 
     public List<Project> getAssignedProjects() {

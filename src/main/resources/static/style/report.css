@@ -6,19 +6,19 @@ body {
 }
 
 .report-container {
-    max-width: 800px;
+    max-width: 100%; /* Limita la larghezza massima al 100% */
     margin: 0 auto;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: fit-content; /* Adatta il contenitore alla larghezza della tabella */
 }
 
 .header-info p {
     margin: 5px 0;
     font-size: 14px;
 }
-
 
 form {
     margin: 20px 0;
@@ -65,7 +65,6 @@ form button:hover {
     color: #0056b3;
 }
 
-
 h2 {
     text-align: center;
     margin-top: 20px;
@@ -74,14 +73,16 @@ h2 {
 
 table {
     width: 100%;
+    max-width: 100%; /* Impedisce che la tabella superi i bordi del contenitore */
     border-collapse: collapse;
-    margin-top: 20px;
+    margin: 20px auto; /* Centra la tabella */
 }
 
 th, td {
     border: 1px solid #ddd;
     text-align: center;
     padding: 8px;
+    white-space: nowrap; /* Impedisce la rottura del testo nelle celle */
 }
 
 th {
@@ -100,4 +101,11 @@ tr:hover {
 .signature-section {
     margin-top: 30px;
     font-size: 14px;
+}
+
+/* Aggiungi la regola per dispositivi mobili */
+@media (max-width: 768px) {
+    .report-container {
+        width: 100%; /* Usa il 100% della larghezza per schermi piccoli */
+    }
 }

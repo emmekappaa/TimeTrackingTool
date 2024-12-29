@@ -26,8 +26,8 @@ public class DatabaseInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         System.out.println("Eseguo l'inizializzazione del database...");
-        Researcher r1 = new Researcher("Dario","Rossi","user","user");
-        Manager m1 = new Manager("Franco","Verdi","root","root");
+        Researcher r1 = new Researcher("Dario","Rossi","user","user", "LXQZJV78B10I098I");
+        Manager m1 = new Manager("Franco","Verdi","root","root", "LYGZZH59P48B080B");
         r.save(r1);
         r.save(m1);
         ArrayList<Researcher> list_r = new ArrayList<>();
@@ -37,10 +37,10 @@ public class DatabaseInitializer implements CommandLineRunner {
             System.out.println(r1.getFirstName());
         }
         */
-        Project p1 = new Project("ProjectZomboide","29/04/2002","29/04/2025",m1,list_r);
-        Project p2 = new Project("Startx","29/04/2002","29/04/2025",m1,list_r);
-        Project p3 = new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r);
-        Project p4 = new Project("FilesMans","29/04/2002","29/04/2025",m1,list_r);
+        Project p1 = new Project("ProjectZomboide","29/04/2002","29/04/2025",m1,list_r, "PZ248597", "UNIVR", "98472683");
+        Project p2 = new Project("Startx","29/04/2002","29/04/2025",m1,list_r, "SX216537", "UNIVR", "98472683");
+        Project p3 = new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r, "MK160397", "UNIVR", "98726789");
+        Project p4 = new Project("FilesMans","29/04/2002","29/04/2025",m1,list_r, "FM083789", "UNIVR", "62794036");
         p.save(p1);
         p.save(p2);
         p.save(p3);
