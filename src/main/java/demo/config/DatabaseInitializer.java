@@ -45,7 +45,28 @@ public class DatabaseInitializer implements CommandLineRunner {
         p.save(p2);
         p.save(p3);
         p.save(p4);
-        t.save(new TimeLog(r1, p1, LocalDate.of(2024,12,18), 4));
-        t.save(new TimeLog(r1, p3, LocalDate.of(2014,10,1), 7));
+        //t.save(new TimeLog(r1, p1, LocalDate.of(2024,12,18), 4));
+        //t.save(new TimeLog(r1, p3, LocalDate.of(2014,10,1), 7));
+
+        // Aggiunta TimeLog per ottobre 2024
+        for (int day = 1; day <= 31; day++) {
+            t.save(new TimeLog(r1, p1, LocalDate.of(2024, 10, day), 4));
+            if (day % 2 == 0) t.save(new TimeLog(r1, p2, LocalDate.of(2024, 10, day), 3));
+        }
+
+        // Aggiunta TimeLog per novembre 2024
+        for (int day = 1; day <= 30; day++) {
+            t.save(new TimeLog(r1, p3, LocalDate.of(2024, 11, day), 5));
+            if (day % 3 == 0) t.save(new TimeLog(r1, p4, LocalDate.of(2024, 11, day), 2));
+        }
+
+        // Aggiunta TimeLog per dicembre 2024
+        for (int day = 1; day <= 31; day++) {
+            t.save(new TimeLog(r1, p1, LocalDate.of(2024, 12, day), 6));
+            if (day % 2 == 0) t.save(new TimeLog(r1, p3, LocalDate.of(2024, 12, day), 4));
+        }
+
+        //t.save(new TimeLog(r1, p1, LocalDate.of(2024, 1, 15), 6));
+        //t.save(new TimeLog(r1, p3, LocalDate.of(2023, 3, 10), 7));
     }
 }

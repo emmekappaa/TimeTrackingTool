@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Mensile</title>
+    <link rel="stylesheet" href="/style/report.css">
+</head>
+<body>
+<!-- Link di ritorno alla home -->
+<a href="/homeResearcher" id="back-link">Back to Home</a>
+
+<div class="report-container">
+    <!-- Modulo per la selezione del mese e dell'anno -->
+    <form action="/monthly/report" method="get">
+        <label for="month">Seleziona Mese:</label>
+        <select name="month" id="month">
+            <option value="1" th:selected="${selectedMonth == 1}">Gennaio</option>
+            <option value="2" th:selected="${selectedMonth == 2}">Febbraio</option>
+            <option value="3" th:selected="${selectedMonth == 3}">Marzo</option>
+            <option value="4" th:selected="${selectedMonth == 4}">Aprile</option>
+            <option value="5" th:selected="${selectedMonth == 5}">Maggio</option>
+            <option value="6" th:selected="${selectedMonth == 6}">Giugno</option>
+            <option value="7" th:selected="${selectedMonth == 7}">Luglio</option>
+            <option value="8" th:selected="${selectedMonth == 8}">Agosto</option>
+            <option value="9" th:selected="${selectedMonth == 9}">Settembre</option>
+            <option value="10" th:selected="${selectedMonth == 10}">Ottobre</option>
+            <option value="11" th:selected="${selectedMonth == 11}">Novembre</option>
+            <option value="12" th:selected="${selectedMonth == 12}">Dicembre</option>
+        </select>
+
+        <label for="year">Seleziona Anno:</label>
+        <input type="number" name="year" id="year" th:value="${selectedYear}" min="2000" max="2100">
+
+        <button type="submit">Aggiorna</button>
+    </form>
+
+    <!-- Informazioni iniziali -->
+    <div class="header-info">
+        <p><strong>Nome Ricercatore:</strong> <span th:text="${researcherName}"></span> <span th:text="${researcherSurname}"></span></p>
+        <p><strong>Codice Fiscale:</strong> <span th:text="${fiscalCode}"></span></p>
+        <p><strong>Titolo del Progetto:</strong> <span th:text="${projectTitle}"></span></p>
+        <p><strong>CLUP:</strong> <span th:text="${clup}"></span></p>
+        <p><strong>Codice del Progetto:</strong> <span th:text="${projectCode}"></span></p>
+        <p><strong>Organizzazione:</strong> <span th:text="${organizationName}"></span></p>
+    </div>
+
+    <!-- Tabella giornaliera -->
+    <h2>Report Mensile</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Giorno</th>
+            <th>Ore sul progetto</th>
+            <th>Ore su altri progetti</th>
+            <th>Ore totali</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="day : ${days}">
+            <td th:text="${day.day}"></td>
+            <td th:text="${day.projectHours}"></td>
+            <td th:text="${day.otherProjectsHours}"></td>
+            <td th:text="${day.totalHours}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Sezione firma -->
+    <div class="signature-section">
+        <p>Firma del Ricercatore: ____________________________</p>
+        <p>Firma del Direttore del Dipartimento: ____________________________</p>
+    </div>
+</div>
+</body>
+</html>
