@@ -13,6 +13,13 @@
 <div class="report-container">
     <!-- Modulo per la selezione del mese e dell'anno -->
     <form action="/monthly/report" method="get">
+
+        <label for="selectedProject">Select Project:</label>
+        <select name="selectedProject" id="selectedProject" required>
+            <option value="" disabled th:unless="${selectedProject != null}" selected>Select a project</option>
+            <option th:each="project : ${projects}" th:value="${project.name}" th:text="${project.name}" th:selected="${selectedProject.getName() == project.getName()}"></option>
+        </select>
+
         <label for="month">Select Month:</label>
         <select name="month" id="month" required>
             <option value="" disabled selected>Select a month</option>
@@ -64,6 +71,12 @@
             <td>Other Projects Hours</td>
             <td th:each="day : ${days}" th:text="${day.otherProjectsHours}">0</td>
         </tr>
+
+        <tr>
+            <td>Other Projects Hours Same Organization</td>
+            <td th:each="day : ${days}" th:text="${day.otherProjectsHoursSameOrganization}">0</td>
+        </tr>
+
         <tr>
             <td>Total Hours</td>
             <td th:each="day : ${days}" th:text="${day.totalHours}">0</td>

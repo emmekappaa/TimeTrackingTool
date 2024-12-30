@@ -39,7 +39,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         */
         Project p1 = new Project("ProjectZomboide","29/04/2002","29/04/2025",m1,list_r, "PZ248597", "UNIVR", "98472683");
         Project p2 = new Project("Startx","29/04/2002","29/04/2025",m1,list_r, "SX216537", "UNIVR", "98472683");
-        Project p3 = new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r, "MK160397", "UNIVR", "98726789");
+        Project p3 = new Project("Marketprog","29/04/2002","29/04/2025",m1,list_r, "MK160397", "CASADINONNA", "98726789");
         Project p4 = new Project("FilesMans","29/04/2002","29/04/2025",m1,list_r, "FM083789", "UNIVR", "62794036");
         p.save(p1);
         p.save(p2);

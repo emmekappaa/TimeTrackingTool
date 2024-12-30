@@ -38,6 +38,14 @@ public class Project {
         this.cup = cup;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return id == project.id;
+    }
+
     public long getId() {
         return id;
     }

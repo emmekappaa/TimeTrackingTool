@@ -2,6 +2,7 @@ package demo.controller;
 
 import demo.model.Person;
 import demo.model.Project;
+import demo.model.Researcher;
 import demo.model.TimeLog;
 import demo.repository.ProjectRepository;
 import demo.repository.TimeLogRepository;
@@ -29,7 +30,7 @@ public class ReportController {
     private TimeLogRepository tml;
 
     @RequestMapping("")
-    public String showReport(HttpSession session, HttpServletResponse response, Model model, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year) {
+    public String showReport(HttpSession session, HttpServletResponse response, Model model, @RequestParam(value = "selectedProject", required = false) String selectedProject, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year) {
         // disabilito cache, non voglio che la pagina rimani in memoria al browser
         response.setHeader("Cache-Control", "no-store");
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
@@ -37,15 +38,26 @@ public class ReportController {
         if (loggedInUser == null) {
             return "redirect:/";
         }
+        System.out.println(selectedProject + " " + month + " " + year);
+        Project project = projectRepository.findByName(selectedProject);
+        if (project != null) {
+            System.out.println(project.getName() + "test");
+        }
 
-        Project project = null;
-
-        for (Project p : projectRepository.findAll()) {
-            if (p.getResearchers().contains(loggedInUser)) {
-                project = p;
-                break;
+        if (project == null){
+            for (Project p : projectRepository.findAll()) {
+                if (p.getResearchers().contains(loggedInUser)) {
+                    project = p;
+                    break;
+                }
             }
         }
+
+        ArrayList<Project> allProjects = new ArrayList<>();
+        allProjects = projectRepository.findByResearchersContains((Researcher) loggedInUser);
+        model.addAttribute("projects", allProjects);
+        ArrayList<Project> projectsBySameOrganization = new ArrayList<>();
+        model.addAttribute("selectedProject", project);
 
         if (project != null) {
             model.addAttribute("projectTitle", project.getName());
@@ -77,24 +89,34 @@ public class ReportController {
             }
         }
 
+        ArrayList<Project> otherProjectsWithSameOrganization = new ArrayList<>();
+        otherProjectsWithSameOrganization = projectRepository.findByResearchersContainsAndOrganizationName((Researcher) loggedInUser, project.getOrganizationName());
+
         List<DayData> days = new ArrayList<>();
         for (int day = 1; day <= startOfMonth.lengthOfMonth(); day++) {
             LocalDate currentDate = LocalDate.of(selectedYear, selectedMonth, day);
 
             double projectHours = 0;
             double otherProjectsHours = 0;
+            double otherProjectsHoursSameOrganization = 0;
 
             for (TimeLog log : timeLogs) {
                 if (log.getDate().equals(currentDate)) {
                     if (log.getProject().equals(project)) {
+
                         projectHours += log.getHoursWorked();
                     } else {
+                        System.out.println("CI ENTRO");
+                        if (otherProjectsWithSameOrganization.contains(log.getProject())){
+                            otherProjectsHoursSameOrganization += log.getHoursWorked();
+                        }
+
                         otherProjectsHours += log.getHoursWorked();
                     }
                 }
             }
 
-            days.add(new DayData(day, projectHours, otherProjectsHours, projectHours + otherProjectsHours));
+            days.add(new DayData(day, projectHours, otherProjectsHours, otherProjectsHoursSameOrganization, projectHours + otherProjectsHours));
         }
 
         model.addAttribute("days", days);
@@ -110,12 +132,14 @@ public class ReportController {
         private int day;
         private double projectHours;
         private double otherProjectsHours;
+        private double otherProjectsHoursSameOrganization;
         private double totalHours;
 
-        public DayData(int day, double projectHours, double otherProjectsHours, double totalHours) {
+        public DayData(int day, double projectHours, double otherProjectsHours, double otherProjectsHoursSameOrganization, double totalHours) {
             this.day = day;
             this.projectHours = projectHours;
             this.otherProjectsHours = otherProjectsHours;
+            this.otherProjectsHoursSameOrganization = otherProjectsHoursSameOrganization;
             this.totalHours = totalHours;
         }
 
@@ -124,6 +148,7 @@ public class ReportController {
         public double getProjectHours() { return projectHours; }
         public double getOtherProjectsHours() { return otherProjectsHours; }
         public double getTotalHours() { return totalHours; }
+        public double getOtherProjectsHoursSameOrganization() { return otherProjectsHoursSameOrganization; }
     }
 
 }
