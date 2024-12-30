@@ -19,20 +19,30 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/hoursHistoryResearcher")
-public class HoursHistoryResearcherController {
+@RequestMapping("/hoursHistory")
+public class HoursHistoryController {
     @Autowired
     private TimeLogRepository timeLogRepository;
+    @PostMapping("/back")
+    public String back(HttpSession session, Model model) {
 
+        Boolean role = session.getAttribute("role").toString().equals("Manager");
+        if (role) {
+            return "redirect:/homeManager";
+        }else {
+            return "redirect:/homeResearcher";
+        }
+
+    }
     @RequestMapping("")
     public String hoursHistory(HttpSession session, HttpServletResponse response, Model model){
-        System.out.println("hoursHistoryResearcherController");
+        System.out.println("hoursHistoryController");
         // disabilito cache, non voglio che la pagina rimani in memoria al browser
         response.setHeader("Cache-Control","no-store");
 
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
-        String role = (String) session.getAttribute("role");
-        if (loggedInUser == null || !"Researcher".equals(role)) {
+
+        if (loggedInUser == null) {
             session.invalidate();
             return "redirect:/";
         }
@@ -45,7 +55,7 @@ public class HoursHistoryResearcherController {
         }
         model.addAttribute("timeLogs", timeLogs);
 
-        return "hoursHistoryResearcher";
+        return "hoursHistory";
     }
 
     /*

@@ -2,6 +2,7 @@ package demo.controller;
 
 import demo.model.*;
 import demo.repository.ProjectRepository;
+import demo.repository.SignatureRepository;
 import demo.repository.TimeLogRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +28,9 @@ public class ReportController {
     @Autowired
     private TimeLogRepository tml;
 
+    @Autowired
+    private SignatureRepository sr;
+
     @PostMapping("/back")
     public String back(HttpSession session, Model model) {
 
@@ -38,6 +42,40 @@ public class ReportController {
         }
 
     }
+    @PostMapping("/sign")
+    public String sign(@RequestParam(value = "selectedProject", required = false) String selectedProject,@RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year, HttpSession session) {
+        Person loggedInUser = (Person) session.getAttribute("loggedInUser");
+
+        LocalDate now = LocalDate.now();
+        month = (month != null) ? month : now.getMonthValue();
+        year = (year != null) ? year : now.getYear();
+        Boolean role = session.getAttribute("role").toString().equals("Manager");
+        Project project = null;
+
+        if (selectedProject == null){
+            for (Project p : projectRepository.findAll()) {
+
+
+                if (!role && p.getResearchers().contains(loggedInUser)) {
+                    project = p;
+                    break;
+                }
+
+                if (role && p.getManager().equals(loggedInUser)) {
+                    project = p;
+                    break;
+                }
+            }
+        }
+        else{
+            project = projectRepository.findByName(selectedProject);
+        }
+
+        sr.save(new Signature(loggedInUser,project,month,year));
+
+        System.out.println("salvato");
+        return "redirect:/report";
+    }
 
     @RequestMapping("")
     public String showReport(HttpSession session, HttpServletResponse response, Model model, @RequestParam(value = "selectedProject", required = false) String selectedProject, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year) {
@@ -48,6 +86,7 @@ public class ReportController {
         if (loggedInUser == null) {
             return "redirect:/";
         }
+
 
         Boolean role = session.getAttribute("role").toString().equals("Manager");
         System.out.println(role);
@@ -155,6 +194,25 @@ public class ReportController {
         model.addAttribute("days", days);
         model.addAttribute("selectedMonth", selectedMonth);
         model.addAttribute("selectedYear", selectedYear);
+
+        if(!role)
+        {
+            if(sr.findByPersonAndProjectAndMonthrAndYearr(loggedInUser, project, selectedMonth, selectedYear).isPresent())
+                model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+
+            if(sr.findByPersonAndProjectAndMonthrAndYearr(project.getManager(), project, selectedMonth, selectedYear).isPresent())
+                model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
+        }
+        else
+        {
+            if(sr.findByPersonAndProjectAndMonthrAndYearr(loggedInUser, project, selectedMonth, selectedYear).isPresent())
+                model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+
+            //il mio ricercatore in questione
+            //if(sr.findByPersonAndProjectAndMonthrAndYearr(Object temp, project, selectedMonth, selectedYear).isPresent())
+              //  model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
+        }
+
 
         return "report";
     }
