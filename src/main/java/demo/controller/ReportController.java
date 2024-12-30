@@ -1,9 +1,6 @@
 package demo.controller;
 
-import demo.model.Person;
-import demo.model.Project;
-import demo.model.Researcher;
-import demo.model.TimeLog;
+import demo.model.*;
 import demo.repository.ProjectRepository;
 import demo.repository.TimeLogRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,6 +27,18 @@ public class ReportController {
     @Autowired
     private TimeLogRepository tml;
 
+    @PostMapping("/back")
+    public String back(HttpSession session, Model model) {
+
+        Boolean role = session.getAttribute("role").toString().equals("Manager");
+        if (role) {
+            return "redirect:/homeManager";
+        }else {
+            return "redirect:/homeResearcher";
+        }
+
+    }
+
     @RequestMapping("")
     public String showReport(HttpSession session, HttpServletResponse response, Model model, @RequestParam(value = "selectedProject", required = false) String selectedProject, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year) {
         // disabilito cache, non voglio che la pagina rimani in memoria al browser
@@ -38,6 +48,10 @@ public class ReportController {
         if (loggedInUser == null) {
             return "redirect:/";
         }
+
+        Boolean role = session.getAttribute("role").toString().equals("Manager");
+        System.out.println(role);
+        model.addAttribute("manager", role);
         System.out.println(selectedProject + " " + month + " " + year);
         Project project = projectRepository.findByName(selectedProject);
         if (project != null) {
@@ -46,7 +60,14 @@ public class ReportController {
 
         if (project == null){
             for (Project p : projectRepository.findAll()) {
-                if (p.getResearchers().contains(loggedInUser)) {
+
+
+                if (!role && p.getResearchers().contains(loggedInUser)) {
+                    project = p;
+                    break;
+                }
+
+                if (role && p.getManager().equals(loggedInUser)) {
                     project = p;
                     break;
                 }
@@ -54,7 +75,14 @@ public class ReportController {
         }
 
         ArrayList<Project> allProjects = new ArrayList<>();
-        allProjects = projectRepository.findByResearchersContains((Researcher) loggedInUser);
+
+        if (role){
+            allProjects = projectRepository.findByManager((Manager)loggedInUser);
+        }else{
+            allProjects = projectRepository.findByResearchersContains((Researcher) loggedInUser);
+        }
+
+
         model.addAttribute("projects", allProjects);
         ArrayList<Project> projectsBySameOrganization = new ArrayList<>();
         model.addAttribute("selectedProject", project);
@@ -90,7 +118,13 @@ public class ReportController {
         }
 
         ArrayList<Project> otherProjectsWithSameOrganization = new ArrayList<>();
-        otherProjectsWithSameOrganization = projectRepository.findByResearchersContainsAndOrganizationName((Researcher) loggedInUser, project.getOrganizationName());
+
+        if (role){
+            otherProjectsWithSameOrganization = projectRepository.findByManagerAndOrganizationName((Manager)loggedInUser, project.getOrganizationName());
+        }else {
+            otherProjectsWithSameOrganization = projectRepository.findByResearchersContainsAndOrganizationName((Researcher) loggedInUser, project.getOrganizationName());
+        }
+
 
         List<DayData> days = new ArrayList<>();
         for (int day = 1; day <= startOfMonth.lengthOfMonth(); day++) {
@@ -106,7 +140,6 @@ public class ReportController {
 
                         projectHours += log.getHoursWorked();
                     } else {
-                        System.out.println("CI ENTRO");
                         if (otherProjectsWithSameOrganization.contains(log.getProject())){
                             otherProjectsHoursSameOrganization += log.getHoursWorked();
                         }

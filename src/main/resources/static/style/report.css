@@ -15,6 +15,13 @@ body {
     width: fit-content; /* Adatta il contenitore alla larghezza della tabella */
 }
 
+button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
 .header-info p {
     margin: 5px 0;
     font-size: 14px;

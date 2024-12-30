@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="/style/report.css">
 </head>
 <body>
-<!-- Link di ritorno alla home -->
-<a href="/homeResearcher" id="back-link">Back to Home</a>
+<form action="/monthly/report/back" method="post" style="display: inline;">
+    <button type="submit" id="back-button">Back to Home</button>
+</form>
+
 
 <div class="report-container">
     <!-- Modulo per la selezione del mese e dell'anno -->
@@ -45,7 +47,7 @@
 
     <!-- Informazioni iniziali -->
     <div class="header-info">
-        <p><strong>Researcher Name:</strong> <span th:text="${researcherName}"></span> <span th:text="${researcherSurname}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${researcherName}"></span> <span th:text="${researcherSurname}"></span></p>
         <p><strong>Fiscal Code:</strong> <span th:text="${fiscalCode}"></span></p>
         <p><strong>Project Title:</strong> <span th:text="${projectTitle}"></span></p>
         <p><strong>CUP:</strong> <span th:text="${cup}"></span></p>
@@ -84,11 +86,25 @@
         </tbody>
     </table>
 
-    <!-- Sezione firma -->
     <div class="signature-section">
-        <p>Researcher Signature: ____________________________</p>
-        <p>Department Director Signature: ____________________________</p>
+        <p>
+            Researcher Signature: ____________________________
+        <form action="/monthly/report/sign" method="post" style="display:inline;">
+            <input type="hidden" name="role" value="researcher">
+            <button type="submit" th:disabled="${manager}">&#x2713; Sign</button>
+        </form>
+        </p>
+        <p>
+            Department Director Signature: ____________________________
+        <form action="/monthly/report/sign" method="post" style="display:inline;">
+            <input type="hidden" name="role" value="manager">
+            <button type="submit" th:disabled="${!manager}">&#x2713; Sign</button>
+        </form>
+        </p>
     </div>
+
 </div>
+
+
 </body>
 </html>
