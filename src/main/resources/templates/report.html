@@ -91,39 +91,19 @@
             Researcher Signature: <span id="researcher-signature" th:text="${researcherRS}" >__________________________</span>
         <form action="/monthly/report/sign" method="post" style="display:inline;">
             <input type="hidden" name="role" value="researcher">
-            <button type="button" id="researcher-sign-button" th:disabled="${manager}">&#x2713; Sign</button>
+            <button type="submit" id="researcher-sign-button" th:disabled="${manager}">&#x2713; Sign</button>
         </form>
         </p>
         <p>
             Department Director Signature: <span id="manager-signature" th:text="${researcherMS}">__________________________</span>
         <form action="/monthly/report/sign" method="post" style="display:inline;">
             <input type="hidden" name="role" value="manager">
-            <button type="button" id="manager-sign-button" th:disabled="${!manager}">&#x2713; Sign</button>
+            <button type="submit" id="manager-sign-button" th:disabled="${!manager}">&#x2713; Sign</button>
         </form>
         </p>
     </div>
 
-    <script>
-        document.getElementById('researcher-sign-button').addEventListener('click', () => {
-            const researcherName = "[[${researcherName}]] [[${researcherSurname}]]";
-            document.getElementById('researcher-signature').innerText = researcherName;
-            fetch('/monthly/report/sign', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ role: 'researcher' })
-            });
-        });
 
-        document.getElementById('manager-sign-button').addEventListener('click', () => {
-            const managerName = "[[${researcherName}]] [[${researcherSurname}]]"; // Cambia se hai un nome per il manager
-            document.getElementById('manager-signature').innerText = managerName;
-            fetch('/monthly/report/sign', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ role: 'manager' })
-            });
-        });
-    </script>
 
 
 </div>

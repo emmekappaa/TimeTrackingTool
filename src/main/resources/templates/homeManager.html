@@ -73,8 +73,56 @@
     <div class="links-container">
         <a href="/projectsManager" class="link">View Projects List</a>
         <a href="/hoursHistory" class="link">History Hours</a>
-        <a href="/monthly/report" class="link">Monthly Reporting</a>
+
+        <a href="/homeManager/monthly/report" class="link" id="monthly-report-link">Monthly Reporting</a>
+
+        <!-- Popup Modal -->
+        <!-- Popup Modal -->
+        <div id="monthly-report-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h3>Select Researcher</h3>
+                <form action="/homeManager/monthly/report" method="post" id="report-form">
+                    <label for="researcher">Choose a researcher:</label>
+                    <select id="researcher" name="researcherId" required>
+                        <option value="" disabled selected>Select a researcher</option>
+                        <option th:each="researcher : ${researchers}"
+                                th:value="${researcher.id}"
+                                th:text="${researcher.firstName + ' ' + researcher.lastName}">
+                            Researcher Name
+                        </option>
+                    </select>
+                    <div class="modal-buttons">
+                        <button type="submit" id="monthly-report-button">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("monthly-report-modal");
+        const link = document.getElementById("monthly-report-link");
+        const cancelButton = document.getElementById("cancel-button");
+        const form = document.getElementById("report-form");
+
+        // Open the modal
+        link.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+            modal.style.display = "flex";
+        });
+
+        // Close the modal
+        cancelButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+
+    });
+</script>
+
+
 </body>
 </html>

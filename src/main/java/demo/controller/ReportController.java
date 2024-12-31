@@ -52,6 +52,8 @@ public class ReportController {
         Boolean role = session.getAttribute("role").toString().equals("Manager");
         Project project = null;
 
+        System.out.println("VUOLE FIRMARE "  + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+
         if (selectedProject == null){
             for (Project p : projectRepository.findAll()) {
 
@@ -74,7 +76,7 @@ public class ReportController {
         sr.save(new Signature(loggedInUser,project,month,year));
 
         System.out.println("salvato");
-        return "redirect:/report";
+        return "redirect:/monthly/report";
     }
 
     @RequestMapping("")
@@ -87,8 +89,17 @@ public class ReportController {
             return "redirect:/";
         }
 
-
+        System.out.println("PROVA");
         Boolean role = session.getAttribute("role").toString().equals("Manager");
+        Boolean queryAux = false;
+        System.out.println(role);
+        if (role){
+            loggedInUser = (Person) session.getAttribute("selectedUser");
+            System.out.println(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "DOPO");
+            queryAux = loggedInUser instanceof Manager;
+
+        }
+
         System.out.println(role);
         model.addAttribute("manager", role);
         System.out.println(selectedProject + " " + month + " " + year);
@@ -100,23 +111,35 @@ public class ReportController {
         if (project == null){
             for (Project p : projectRepository.findAll()) {
 
-
-                if (!role && p.getResearchers().contains(loggedInUser)) {
+                if (role && queryAux && p.getManager().equals(loggedInUser)){
                     project = p;
                     break;
                 }
 
-                if (role && p.getManager().equals(loggedInUser)) {
+                if (role && !queryAux && p.getResearchers().contains(loggedInUser)){
                     project = p;
                     break;
                 }
+
+                if (p.getResearchers().contains(loggedInUser)){
+                    project = p;
+                    break;
+                }
+
             }
         }
 
         ArrayList<Project> allProjects = new ArrayList<>();
 
         if (role){
-            allProjects = projectRepository.findByManager((Manager)loggedInUser);
+
+            if (queryAux){
+                allProjects = projectRepository.findByManager((Manager)loggedInUser);
+            }else{
+                allProjects = projectRepository.findByResearchersContains((Researcher) loggedInUser);
+            }
+
+
         }else{
             allProjects = projectRepository.findByResearchersContains((Researcher) loggedInUser);
         }
@@ -159,7 +182,12 @@ public class ReportController {
         ArrayList<Project> otherProjectsWithSameOrganization = new ArrayList<>();
 
         if (role){
-            otherProjectsWithSameOrganization = projectRepository.findByManagerAndOrganizationName((Manager)loggedInUser, project.getOrganizationName());
+            if (queryAux){
+                otherProjectsWithSameOrganization = projectRepository.findByManagerAndOrganizationName((Manager)loggedInUser, project.getOrganizationName());
+            }else{
+                otherProjectsWithSameOrganization = projectRepository.findByResearchersContainsAndOrganizationName((Researcher) loggedInUser, project.getOrganizationName());
+            }
+
         }else {
             otherProjectsWithSameOrganization = projectRepository.findByResearchersContainsAndOrganizationName((Researcher) loggedInUser, project.getOrganizationName());
         }
@@ -205,12 +233,18 @@ public class ReportController {
         }
         else
         {
-            if(sr.findByPersonAndProjectAndMonthrAndYearr(loggedInUser, project, selectedMonth, selectedYear).isPresent())
-                model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 
-            //il mio ricercatore in questione
-            //if(sr.findByPersonAndProjectAndMonthrAndYearr(Object temp, project, selectedMonth, selectedYear).isPresent())
-              //  model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
+            if (!queryAux){
+                if(sr.findByPersonAndProjectAndMonthrAndYearr(loggedInUser, project, selectedMonth, selectedYear).isPresent())
+                    model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+            }else{
+
+            }
+
+            System.out.println("MANAGER" + project.getManager().getFirstName() + " " + project.getManager().getLastName());
+
+            if(sr.findByPersonAndProjectAndMonthrAndYearr((Person) session.getAttribute("loggedInUser"), project, selectedMonth, selectedYear).isPresent())
+                model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
         }
 
 

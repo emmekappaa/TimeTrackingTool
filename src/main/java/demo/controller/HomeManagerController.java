@@ -2,8 +2,10 @@ package demo.controller;
 
 import demo.model.Person;
 import demo.model.Project;
+import demo.model.Researcher;
 import demo.model.TimeLog;
 import demo.repository.ProjectRepository;
+import demo.repository.Repository;
 import demo.repository.TimeLogRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/homeManager")
@@ -28,6 +32,8 @@ public class HomeManagerController {
 
     @Autowired
     private TimeLogRepository timeLogRepository;
+    @Autowired
+    private Repository repo;
 
     @RequestMapping("")
     public String homePage(HttpSession session, HttpServletResponse response, Model model) {
@@ -60,6 +66,20 @@ public class HomeManagerController {
         }
         model.addAttribute("managerProjects", managerProjects);
 
+        ArrayList<Person> researchers = new ArrayList<>();
+
+        for (Project p : managerProjects){
+            researchers.addAll(p.getResearchers());
+        }
+        Set<Person> set  = new HashSet<>(researchers);
+        researchers = new ArrayList<>(set);
+        researchers.add(loggedInUser);
+        Person aux = researchers.get(0);
+        researchers.set(0, researchers.get(researchers.size()-1));
+        researchers.set(researchers.size()-1, aux);
+        model.addAttribute("researchers", researchers);
+
+
         ArrayList<TimeLog> timeLogsToday = new ArrayList<>();
         for (TimeLog t : timeLogRepository.findAllByPersonAndDate(loggedInUser, today)) {
             timeLogsToday.add(t);
@@ -73,6 +93,32 @@ public class HomeManagerController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @PostMapping("/monthly/report")
+    public String monthlyReport(@RequestParam("researcherId") long researcherId, HttpSession session, Model model) {
+        Person loggedInUser = (Person) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/";
+        }
+
+        // Recupera il ricercatore selezionato
+
+        Person researcher = (Person) repo.findById(researcherId).orElse(null);
+        if (researcher == null) {
+            model.addAttribute("error", "Researcher not found.");
+            return "homeManager";
+        }
+
+
+        System.out.println(researcher.getFirstName() + " " + researcher.getLastName() + "PRIMA");
+        session.setAttribute("selectedUser", researcher);
+        //model.addAttribute("selectedUser", researcher);
+
+        // Logica per il report mensile basata sul ricercatore
+        return "redirect:/monthly/report";
+    }
+
+
 
     @PostMapping("/addTimeLog")
     public String addTimeLog(@RequestParam("hoursWorked") double hoursWorked, @RequestParam("projectId") long projectId, HttpSession session, Model model, RedirectAttributes redirectAttributes){
