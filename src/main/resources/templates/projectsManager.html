@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Projects</title>
+    <link rel="stylesheet" href="/style/projectManager.css">
+</head>
+<body>
+<!-- Link di ritorno alla home -->
+<a href="/homeManager" id="back-link">Back to Home</a>
+
+<!-- Contenitore principale -->
+<div class="main-container">
+    <header>
+        <h1>Managed Projects</h1>
+    </header>
+
+    <!-- Progetti gestiti -->
+    <h3>Active Projects</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Project Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${managedProjects}">
+            <td th:text="${project.name}">Project Name</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Form per aggiungere un nuovo progetto -->
+    <h3>Add New Project</h3>
+    <form action="/projectsManager/add" method="post">
+        <div>
+            <label for="name">Project Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required>
+        </div>
+        <div>
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" required>
+        </div>
+        <div>
+            <label for="cup">CUP:</label>
+            <input type="text" id="cup" name="cup" required>
+        </div>
+        <div>
+            <label for="projectCode">Project Code:</label>
+            <input type="text" id="projectCode" name="projectCode" required>
+        </div>
+        <div>
+            <label for="organizationName">Organization Name:</label>
+            <input type="text" id="organizationName" name="organizationName" required>
+        </div>
+        <label for="researcherId">Assign to Researcher:</label>
+        <select id="researcherId" name="researcherId" required>
+            <option value="" disabled selected>Select a Researcher</option>
+            <option th:each="researcher : ${researchers}"
+                    th:value="${researcher.id}"
+                    th:text="${researcher.firstName} + ' ' + ${researcher.lastName}">
+                Researcher Name
+            </option>
+        </select><br>
+
+        <button type="submit">Assign Project</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,7 +1,10 @@
 package demo.controller;
 
+import demo.model.PendingProject;
 import demo.model.Person;
 import demo.model.Project;
+import demo.model.Researcher;
+import demo.repository.PendingProjectRepository;
 import demo.repository.ProjectRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -9,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +25,9 @@ public class ResearcherProjectsController {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private PendingProjectRepository pendingProjectrepo;
 
     @RequestMapping("")
     public String viewProjects(HttpSession session, HttpServletResponse response, Model model) {
@@ -37,21 +45,14 @@ public class ResearcherProjectsController {
 
         for (Project project : projectRepository.findAll()) {
             if (project.getResearchers().contains(loggedInUser)) {
-
+                System.out.println(loggedInUser.getFirstName());
                 activeProjects.add(project);
+                System.out.println(project.getName());
 
             }
         }
 
-        // Progetti in sospeso hardcoded
-        List<HashMap<String, String>> pendingProjects = new ArrayList<>();
-        HashMap<String, String> pendingProject1 = new HashMap<>();
-        pendingProject1.put("name", "Project Gamma");
-        pendingProjects.add(pendingProject1);
-
-        HashMap<String, String> pendingProject2 = new HashMap<>();
-        pendingProject2.put("name", "Project Delta");
-        pendingProjects.add(pendingProject2);
+        List<PendingProject> pendingProjects = pendingProjectrepo.findByResearcher((Researcher) loggedInUser);
 
         model.addAttribute("activeProjects", activeProjects);
         model.addAttribute("pendingProjects", pendingProjects);
@@ -59,12 +60,41 @@ public class ResearcherProjectsController {
         return "projectsResearcher";
     }
 
-    /*
-    @RequestMapping("/homeResearcher")
-    public String backHome() {
-        System.out.println("");
-        return "homeResearcher";
+    // Metodo per gestire l'accettazione del progetto
+    @RequestMapping("/accept")
+    public String acceptProject(@RequestParam("projectId") Long projectId, HttpSession session) {
+        Person loggedInUser = (Person) session.getAttribute("loggedInUser");
+
+        if (loggedInUser != null) {
+            PendingProject project = pendingProjectrepo.findById(projectId).orElse(null);
+            if (project != null) {
+                Project toAdd = project.getProject();
+                ArrayList<Researcher> r = new ArrayList<>(toAdd.getResearchers());
+                r.add((Researcher) loggedInUser);
+                toAdd.setResearchers(r);
+                projectRepository.save(toAdd);
+
+                System.out.println("Salvato");
+                System.out.println(loggedInUser.getFirstName());
+                System.out.println("Salvato");
+                // Rimuovi il pending project
+                PendingProject pendingProject = pendingProjectrepo.findById(projectId).orElse(null);
+                if (pendingProject != null) {
+                    pendingProjectrepo.delete(pendingProject);
+                }
+            }
+        }
+        return "redirect:/projectsResearcher";
     }
-    */
+
+    // Metodo per gestire il rifiuto del progetto
+    @RequestMapping("/decline")
+    public String declineProject(@RequestParam("projectId") Long projectId) {
+        PendingProject pendingProject = pendingProjectrepo.findById(projectId).orElse(null);
+        if (pendingProject != null) {
+            pendingProjectrepo.delete(pendingProject);
+        }
+        return "redirect:/projectsResearcher";
+    }
 
 }

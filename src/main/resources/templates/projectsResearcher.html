@@ -33,24 +33,40 @@
 
     <!-- Progetti in sospeso -->
     <h3>Pending Projects</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Project Name</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="pendingProject : ${pendingProjects}">
-            <td th:text="${pendingProject.name}">Project Y</td>
-            <td>
-                <!-- Bottoni per accettare o declinare -->
-                <button class="accept-btn">✔</button>
-                <button class="decline-btn">✘</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+
+    <!-- Verifica se ci sono progetti in sospeso -->
+    <div th:if="${pendingProjects != null and pendingProjects.size() > 0}">
+        <table>
+            <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pendingProject : ${pendingProjects}">
+                <td th:text="${pendingProject.project.name}">Project Y</td>
+                <td>
+                    <!-- Bottone per accettare -->
+                    <form th:action="@{/projectsResearcher/accept}" method="get">
+                        <input type="hidden" name="projectId" th:value="${pendingProject.id}" />
+                        <button class="accept-btn" type="submit">✔</button>
+                    </form>
+                    <!-- Bottone per rifiutare -->
+                    <form th:action="@{/projectsResearcher/decline}" method="get">
+                        <input type="hidden" name="projectId" th:value="${pendingProject.id}" />
+                        <button class="decline-btn" type="submit">✘</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Se non ci sono progetti pendenti, mostra un messaggio -->
+    <div th:if="${pendingProjects == null or pendingProjects.size() == 0}">
+        <p>No pending projects at the moment.</p>
+    </div>
 </div>
 </body>
 </html>
