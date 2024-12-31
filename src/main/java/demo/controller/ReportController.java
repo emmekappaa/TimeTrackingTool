@@ -98,6 +98,7 @@ public class ReportController {
                 Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser,project, month,year,(Manager) loggedInUser).orElse(null);
                 if(tmp != null){
                     tmp.setSignM();
+                    sr.save(tmp);
                 }
                 else
                 {
@@ -108,10 +109,12 @@ public class ReportController {
             }
 
         }
-        else{
+        else //sono un ricercatore
+        {
             Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser,project, month,year,project.getManager()).orElse(null);
             if(tmp != null){
                 tmp.setSignR();
+                sr.save(tmp);
             }
             else
             {
