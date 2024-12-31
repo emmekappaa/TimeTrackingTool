@@ -52,6 +52,8 @@ public class ReportController {
         Boolean role = session.getAttribute("role").toString().equals("Manager");
         Project project = null;
 
+        Person selected = (Person) session.getAttribute("selectedUser");
+
         System.out.println("VUOLE FIRMARE "  + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 
         if (selectedProject == null){
@@ -73,7 +75,52 @@ public class ReportController {
             project = projectRepository.findByName(selectedProject);
         }
 
-        sr.save(new Signature(loggedInUser,project,month,year));
+        if(role){
+            //manager firma ore ricercatore
+            if(selected instanceof Researcher)
+            {
+                Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(selected,project,month,year,(Manager)loggedInUser).orElse(null);
+                if(tmp != null){
+                    tmp.setSignM();
+                    //DEVO SALVARE NUOVAMENTE OGGETTO IN COPIA NON REFERENZA
+                    sr.save(tmp);
+                }
+                else
+                {
+                    Signature news = new Signature(selected, (Manager) loggedInUser,project,month,year);
+                    news.setSignM();
+                    sr.save(news);
+                }
+
+            }
+            else //altrimenti manager che si firma le sue ore
+            {
+                Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser,project, month,year,(Manager) loggedInUser).orElse(null);
+                if(tmp != null){
+                    tmp.setSignM();
+                }
+                else
+                {
+                    Signature news = new Signature(loggedInUser, (Manager) loggedInUser,project,month,year);
+                    news.setSignM();
+                    sr.save(news);
+                }
+            }
+
+        }
+        else{
+            Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser,project, month,year,project.getManager()).orElse(null);
+            if(tmp != null){
+                tmp.setSignR();
+            }
+            else
+            {
+                Signature news = new Signature(loggedInUser,project.getManager(),project,month,year);
+                news.setSignR();
+                sr.save(news);
+            }
+        }
+
 
         System.out.println("salvato");
         return "redirect:/monthly/report";
@@ -223,28 +270,38 @@ public class ReportController {
         model.addAttribute("selectedMonth", selectedMonth);
         model.addAttribute("selectedYear", selectedYear);
 
-        if(!role)
+        if(!role)// se sono un ricercatore
         {
-            if(sr.findByPersonAndProjectAndMonthrAndYearr(loggedInUser, project, selectedMonth, selectedYear).isPresent())
-                model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
-
-            if(sr.findByPersonAndProjectAndMonthrAndYearr(project.getManager(), project, selectedMonth, selectedYear).isPresent())
-                model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
-        }
-        else
-        {
-
-            if (!queryAux){
-                if(sr.findByPersonAndProjectAndMonthrAndYearr(loggedInUser, project, selectedMonth, selectedYear).isPresent())
-                    model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
-            }else{
-
+            Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser, project, selectedMonth, selectedYear,project.getManager()).orElse(null);
+            if(tmp != null) {
+                if (tmp.getSignR())
+                    model.addAttribute("researcherRS", loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+                if (tmp.getSignM())
+                    model.addAttribute("researcherMS", project.getManager().getFirstName() + " " + project.getManager().getLastName());
             }
 
-            System.out.println("MANAGER" + project.getManager().getFirstName() + " " + project.getManager().getLastName());
+        }
+        else // se sono un manager
+        {
+            if (!queryAux){ // e il selezionato e' ricercatore
+                Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser, project, selectedMonth, selectedYear,project.getManager()).orElse(null);
+                if(tmp != null){
+                    if(tmp.getSignR())
+                        model.addAttribute("researcherRS",loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+                    if(tmp.getSignM())
+                        model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
+                }
 
-            if(sr.findByPersonAndProjectAndMonthrAndYearr((Person) session.getAttribute("loggedInUser"), project, selectedMonth, selectedYear).isPresent())
-                model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
+            }
+            else // se il selezionato sono io (manager)
+            {
+                Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager((Person) session.getAttribute("loggedInUser"),project, selectedMonth, selectedYear, (Manager) session.getAttribute("loggedInUser")).orElse(null);
+                if(tmp != null){
+                    if(tmp.getSignM()){
+                        model.addAttribute("researcherMS",project.getManager().getFirstName() + " " + project.getManager().getLastName());
+                    }
+                }
+            }
         }
 
 

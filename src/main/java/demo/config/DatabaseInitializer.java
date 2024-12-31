@@ -27,11 +27,14 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         System.out.println("Eseguo l'inizializzazione del database...");
         Researcher r1 = new Researcher("Dario","Rossi","user","user", "LXQZJV78B10I098I");
+        Researcher r2 = new Researcher("Luigi","Rossi","user1","user1", "LXQZJV78B10I098I");
         Manager m1 = new Manager("Franco","Verdi","root","root", "LYGZZH59P48B080B");
         r.save(r1);
+        r.save(r2);
         r.save(m1);
         ArrayList<Researcher> list_r = new ArrayList<>();
         list_r.add(r1);
+        list_r.add(r2);
         /*
         for(Person r1: r.findAll()){
             System.out.println(r1.getFirstName());

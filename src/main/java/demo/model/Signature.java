@@ -17,13 +17,21 @@ public class Signature {
     @ManyToOne
     private Project project;
 
+    @ManyToOne
+    private Manager manager;
+
     private int monthr;
 
     private int yearr;
 
+    private boolean signM;
+
+    private boolean signR;
+
     public Signature() {}
 
-    public Signature(Person person, Project project, int monthr, int yearr) {
+    public Signature(Person person, Manager manager, Project project, int monthr, int yearr) {
+        this.manager = manager;
         this.person = person;
         this.project = project;
         this.monthr = monthr;
@@ -44,6 +52,14 @@ public class Signature {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager m) {
+        this.manager = manager;
     }
 
     public Project getProject() {
@@ -68,6 +84,22 @@ public class Signature {
 
     public void setYear(int year) {
         this.yearr = year;
+    }
+
+    public void setSignM(){
+        this.signM = true;
+    }
+
+    public void setSignR(){
+        this.signR = true;
+    }
+
+    public boolean getSignM(){
+        return signM;
+    }
+
+    public boolean getSignR(){
+        return signR;
     }
 
     @Override
