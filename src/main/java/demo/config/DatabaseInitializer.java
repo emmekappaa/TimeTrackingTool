@@ -69,6 +69,8 @@ public class DatabaseInitializer implements CommandLineRunner {
             if (day % 2 == 0) t.save(new TimeLog(r1, p3, LocalDate.of(2024, 12, day), 4));
         }
 
+        t.save(new TimeLog(r1, p2, LocalDate.of(2024, 12, 20), 6));
+
         //t.save(new TimeLog(r1, p1, LocalDate.of(2024, 1, 15), 6));
         //t.save(new TimeLog(r1, p3, LocalDate.of(2023, 3, 10), 7));
     }
