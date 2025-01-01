@@ -88,9 +88,12 @@
 
     <div class="signature-section">
         <p>
-            Researcher Signature: <span id="researcher-signature" th:text="${researcherRS}" >__________________________</span>
+            Researcher Signature: <span id="researcher-signature" th:text="${researcherRS}">__________________________</span>
         <form action="/monthly/report/sign" method="post" style="display:inline;">
             <input type="hidden" name="role" value="researcher">
+            <input type="hidden" name="selectedProject" th:value="${selectedProject.name}">
+            <input type="hidden" name="month" th:value="${selectedMonth}">
+            <input type="hidden" name="year" th:value="${selectedYear}">
             <button type="submit" id="researcher-sign-button" th:disabled="${manager}">&#x2713; Sign</button>
         </form>
         </p>
@@ -98,10 +101,14 @@
             Department Director Signature: <span id="manager-signature" th:text="${researcherMS}">__________________________</span>
         <form action="/monthly/report/sign" method="post" style="display:inline;">
             <input type="hidden" name="role" value="manager">
+            <input type="hidden" name="selectedProject" th:value="${selectedProject.name}">
+            <input type="hidden" name="month" th:value="${selectedMonth}">
+            <input type="hidden" name="year" th:value="${selectedYear}">
             <button type="submit" id="manager-sign-button" th:disabled="${!manager}">&#x2713; Sign</button>
         </form>
         </p>
     </div>
+
 
 
 

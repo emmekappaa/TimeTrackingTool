@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class ReportController {
     @PostMapping("/sign")
     public String sign(@RequestParam(value = "selectedProject", required = false) String selectedProject,@RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year, HttpSession session) {
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
-
+        System.out.println("SING INVOKED" + selectedProject + month + year);
         LocalDate now = LocalDate.now();
         month = (month != null) ? month : now.getMonthValue();
         year = (year != null) ? year : now.getYear();
@@ -126,7 +128,10 @@ public class ReportController {
 
 
         System.out.println("salvato");
-        return "redirect:/monthly/report";
+
+        return "redirect:/monthly/report?selectedProject=" + URLEncoder.encode(project.getName(), StandardCharsets.UTF_8) + "&month=" + month + "&year=" + year;
+
+
     }
 
     @RequestMapping("")
