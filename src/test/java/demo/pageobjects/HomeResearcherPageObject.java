@@ -128,8 +128,9 @@ public class HomeResearcherPageObject extends PageObject {
     /**
      * Clicca sul link "History Hours".
      */
-    public void clickHistoryHoursLink() {
+    public HoursHistoryPageObject clickHistoryHoursLink() {
         historyHoursLink.click();
+        return new HoursHistoryPageObject(driver);
     }
 
     /**

@@ -147,6 +147,24 @@ public class SeleniumTest extends BaseTest {
         assertTrue("Il progetto 'Test' è ancora nella lista dei progetti pendenti.", r.arePendingProjectThere());
     }
 
+    @Test
+    public void testAddTwoHoursAndVerifyInHistory() {
+
+        navigateToHomePage();
+        HomeResearcherPageObject h = loginAsResearcher();
+        h.enterHoursWorked("1");
+        h.selectProject("Marketprog");
+        h.clickAddTimeLog();
+        HoursHistoryPageObject h1 = h.clickHistoryHoursLink();
+        List<WebElement> historyRows = h1.getTableRows();
+
+        boolean timeLogFound = historyRows.stream()
+                .anyMatch(row -> row.getText().contains("Marketprog") && row.getText().contains("1"));
+
+        assertTrue("Il time log con 1 ore non è stato aggiunto correttamente nella cronologia.", timeLogFound);
+    }
+
+
 
     private void navigateToHomePage() {
         driver.get("http://localhost:8080");
