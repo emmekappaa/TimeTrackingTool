@@ -1,9 +1,6 @@
 package demo.tests;
 
-import demo.pageobjects.HomeManagerPageObject;
-import demo.pageobjects.HomeResearcherPageObject;
-import demo.pageobjects.LoginPage;
-import demo.pageobjects.MonthlyReportPageObject;
+import demo.pageobjects.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -61,7 +58,7 @@ public class SeleniumTest extends BaseTest {
         String researcherSignatureAfter = m.getResearcherSignature();
         assertEquals("Dario Rossi", researcherSignatureAfter);
 
-        h = m.clickBackButton();
+        h = (HomeResearcherPageObject) m.clickBackButton("R");
         LoginPage l = h.clickLogout();
         HomeManagerPageObject hm = l.loginManager("root", "root");
         WebElement user = driver.findElement(By.id("username"));
@@ -103,6 +100,29 @@ public class SeleniumTest extends BaseTest {
 
         String ManagerSignatureAfter = m.getManagerSignature();
         assertEquals("Franco Verdi", ManagerSignatureAfter);
+        hm = (HomeManagerPageObject) m.clickBackButton("M");
+        ManagerProjectsPageObject mpp = hm.clickViewProjectsLink();
+        mpp.enterProjectName("Test");
+        mpp.enterStartDate("2024-12-20");
+        mpp.enterEndDate("2025-12-20");
+        mpp.enterCup("000111");
+        mpp.enterProjectCode("123321");
+        mpp.enterOrganizationName("UNIVR");
+        mpp.selectResearcher("Dario Rossi");
+        mpp.clickAssignProjectButton();
+        assertTrue("Il progetto non è stato aggiunto correttamente.", mpp.isProjectPresent("Test"));
+
+        hm = mpp.clickBackLink();
+        l = hm.clickLogout();
+        h = l.loginResearcher("user", "user");
+        ResearcherProjectsPageObject r = h.clickViewProjectsLink();
+
+        r.acceptPendingProject("Test");
+
+        List<String> activeProjectNames = r.getActiveProjectNames();
+        assertTrue("Il progetto 'Test' non è stato trasferito tra i progetti attivi.", activeProjectNames.contains("Test"));
+        assertTrue("Il progetto 'Test' è ancora nella lista dei progetti pendenti.", r.arePendingProjectThere());
+
 
     }
 }

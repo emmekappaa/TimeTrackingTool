@@ -65,8 +65,9 @@ public class HomeManagerPageObject extends PageObject {
     /**
      * Clicca sul link di logout.
      */
-    public void clickLogout() {
+    public LoginPage clickLogout() {
         logoutLink.click();
+        return new LoginPage(driver);
     }
 
     /**
@@ -128,8 +129,9 @@ public class HomeManagerPageObject extends PageObject {
     /**
      * Clicca sul link "View Projects List".
      */
-    public void clickViewProjectsLink() {
+    public ManagerProjectsPageObject clickViewProjectsLink() {
         viewProjectsLink.click();
+        return new ManagerProjectsPageObject(driver);
     }
 
     /**

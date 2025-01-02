@@ -120,8 +120,9 @@ public class HomeResearcherPageObject extends PageObject {
     /**
      * Clicca sul link "View Projects List".
      */
-    public void clickViewProjectsLink() {
+    public ResearcherProjectsPageObject clickViewProjectsLink() {
         viewProjectsLink.click();
+        return new ResearcherProjectsPageObject(driver);
     }
 
     /**

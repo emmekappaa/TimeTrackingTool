@@ -80,9 +80,11 @@ public class MonthlyReportPageObject extends PageObject {
     /**
      * Clicca sul pulsante "Back to Home".
      */
-    public HomeResearcherPageObject clickBackButton() {
+    public PageObject clickBackButton(String s) {
         backButton.click();
-        return new HomeResearcherPageObject(driver);
+        if(s.equals("R"))
+            return new HomeResearcherPageObject(driver);
+        return new HomeManagerPageObject(driver);
     }
 
     /**
