@@ -4,10 +4,7 @@ import demo.pageobjects.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -15,92 +12,119 @@ import static org.junit.Assert.*;
 public class SeleniumTest extends BaseTest {
 
     @Test
-    public void testing(){
-        driver.get("http://localhost:8080");
+    public void testLoginAsResearcher() {
+        navigateToHomePage();
         LoginPage loginPage = new LoginPage(driver);
         HomeResearcherPageObject h = loginPage.loginResearcher("user", "user");
-        // Verifica che l'URL sia quello atteso dopo il login
+
         WebElement username = driver.findElement(By.id("username"));
         assertEquals(username.getText(), "Dario Rossi");
+    }
+
+    @Test
+    public void testAddTimeLog() {
+        navigateToHomePage();
+        HomeResearcherPageObject h = loginAsResearcher();
+
         h.enterHoursWorked("4");
         h.selectProject("ProjectZomboide");
         h.clickAddTimeLog();
-        // Verifica che il "time log" sia stato aggiunto correttamente
+
         boolean timeLogAdded = h.getHoursWorkedTodayRows().stream()
                 .anyMatch(row -> row.getText().contains("ProjectZomboide") && row.getText().contains("4"));
         assertTrue("Il time log non è stato aggiunto correttamente.", timeLogAdded);
-        h.enterHoursWorked("5");
+    }
+
+    @Test
+    public void testErrorOnExceedingMaxHours() {
+        navigateToHomePage();
+        HomeResearcherPageObject h = loginAsResearcher();
+
+        h.enterHoursWorked("9");
         h.selectProject("Startx");
         h.clickAddTimeLog();
-        // Cattura il messaggio di errore
+
         String errorMessage = h.getErrorMessage();
-
-        // Asserzione sul messaggio di errore
         assertEquals("You cannot log more than 8 working hours in a day.", errorMessage);
+    }
 
+    @Test
+    public void testMonthlyReport() {
+        navigateToHomePage();
+        HomeResearcherPageObject h = loginAsResearcher();
         MonthlyReportPageObject m = h.clickMonthlyReportingLink();
-        // Seleziona il progetto "Startx"
+
         m.selectProject("Startx");
-        // Seleziona il mese Dicembre
         m.selectMonth(12);
-        // Inserisce l'anno 2024
         m.enterYear(2024);
-        // Clicca sul pulsante "Update"
         m.clickUpdateButton();
+
         assertEquals("Startx", m.getProjectTitle());
         assertEquals("98472683", m.getCup());
         assertEquals("SX216537", m.getProjectCode());
         assertEquals("UNIVR", m.getOrganizationName());
 
-        // Esegue l'azione di firma da parte del ricercatore
         m.clickResearcherSignButton();
-
         String researcherSignatureAfter = m.getResearcherSignature();
         assertEquals("Dario Rossi", researcherSignatureAfter);
 
         h = (HomeResearcherPageObject) m.clickBackButton("R");
-        LoginPage l = h.clickLogout();
-        HomeManagerPageObject hm = l.loginManager("root", "root");
+
+        h.clickLogout();
+
+        HomeManagerPageObject hm = loginAsManager();
+
+        hm.clickMonthlyReportingLink();
+        hm.selectResearcher("Dario Rossi");
+        MonthlyReportPageObject m1 = hm.clickConfirmReportButton();
+
+        m1.selectProject("Startx");
+        m1.selectMonth(12);
+        m1.enterYear(2024);
+        m1.clickUpdateButton();
+
+        assertEquals("Startx", m1.getProjectTitle());
+        assertEquals("98472683", m1.getCup());
+        assertEquals("SX216537", m1.getProjectCode());
+        assertEquals("UNIVR", m1.getOrganizationName());
+
+        m1.clickManagerSignButton();
+
+        researcherSignatureAfter = m1.getResearcherSignature();
+        assertEquals("Dario Rossi", researcherSignatureAfter);
+
+        String managerSignatureAfter = m.getManagerSignature();
+        assertEquals("Franco Verdi", managerSignatureAfter);
+    }
+
+    @Test
+    public void testManagerFlow() {
+        navigateToHomePage();
+
+        HomeManagerPageObject hm = loginAsManager();
         WebElement user = driver.findElement(By.id("username"));
         assertEquals(user.getText(), "Franco Verdi");
+
         hm.enterHoursWorked("3");
         hm.selectProject("Startx");
         hm.clickAddTimeLog();
-        // Verifica che il "time log" sia stato aggiunto correttamente
-        timeLogAdded = h.getHoursWorkedTodayRows().stream()
+
+        boolean timeLogAdded = hm.getHoursWorkedTodayRows().stream()
                 .anyMatch(row -> row.getText().contains("Startx") && row.getText().contains("3"));
         assertTrue("Il time log non è stato aggiunto correttamente.", timeLogAdded);
+
         hm.enterHoursWorked("6");
         hm.selectProject("ProjectZomboide");
         hm.clickAddTimeLog();
-        // Cattura il messaggio di errore
-        errorMessage = hm.getErrorMessage();
 
-        // Asserzione sul messaggio di errore
+        String errorMessage = hm.getErrorMessage();
         assertEquals("You cannot log more than 8 working hours in a day.", errorMessage);
-        hm.clickMonthlyReportingLink();
-        hm.selectResearcher("Dario Rossi");
-        m = hm.clickConfirmReportButton();
-        // Seleziona il progetto "Startx"
-        m.selectProject("Startx");
-        // Seleziona il mese Dicembre
-        m.selectMonth(12);
-        // Inserisce l'anno 2024
-        m.enterYear(2024);
-        // Clicca sul pulsante "Update"
-        m.clickUpdateButton();
-        assertEquals("Startx", m.getProjectTitle());
-        assertEquals("98472683", m.getCup());
-        assertEquals("SX216537", m.getProjectCode());
-        assertEquals("UNIVR", m.getOrganizationName());
-        m.clickManagerSignButton();
+    }
 
-        researcherSignatureAfter = m.getResearcherSignature();
-        assertEquals("Dario Rossi", researcherSignatureAfter);
-
-        String ManagerSignatureAfter = m.getManagerSignature();
-        assertEquals("Franco Verdi", ManagerSignatureAfter);
-        hm = (HomeManagerPageObject) m.clickBackButton("M");
+    @Test
+    public void testResearcherAcceptsPendingProject() {
+        navigateToHomePage();
+        HomeManagerPageObject hm = loginAsManager();
         ManagerProjectsPageObject mpp = hm.clickViewProjectsLink();
         mpp.enterProjectName("Test");
         mpp.enterStartDate("2024-12-20");
@@ -111,10 +135,9 @@ public class SeleniumTest extends BaseTest {
         mpp.selectResearcher("Dario Rossi");
         mpp.clickAssignProjectButton();
         assertTrue("Il progetto non è stato aggiunto correttamente.", mpp.isProjectPresent("Test"));
-
         hm = mpp.clickBackLink();
-        l = hm.clickLogout();
-        h = l.loginResearcher("user", "user");
+        LoginPage l = hm.clickLogout();
+        HomeResearcherPageObject h = l.loginResearcher("user", "user");
         ResearcherProjectsPageObject r = h.clickViewProjectsLink();
 
         r.acceptPendingProject("Test");
@@ -122,7 +145,20 @@ public class SeleniumTest extends BaseTest {
         List<String> activeProjectNames = r.getActiveProjectNames();
         assertTrue("Il progetto 'Test' non è stato trasferito tra i progetti attivi.", activeProjectNames.contains("Test"));
         assertTrue("Il progetto 'Test' è ancora nella lista dei progetti pendenti.", r.arePendingProjectThere());
+    }
 
 
+    private void navigateToHomePage() {
+        driver.get("http://localhost:8080");
+    }
+
+    private HomeResearcherPageObject loginAsResearcher() {
+        LoginPage loginPage = new LoginPage(driver);
+        return loginPage.loginResearcher("user", "user");
+    }
+
+    private HomeManagerPageObject loginAsManager() {
+        LoginPage loginPage = new LoginPage(driver);
+        return loginPage.loginManager("root", "root");
     }
 }
