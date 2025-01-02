@@ -71,11 +71,11 @@ public abstract class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id;
+        return username.equals(person.getUsername());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(username);
     }
 }
