@@ -17,8 +17,7 @@ public class SeleniumTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         HomeResearcherPageObject h = loginPage.loginResearcher("user", "user");
 
-        WebElement username = driver.findElement(By.id("username"));
-        assertEquals(username.getText(), "Dario Rossi");
+        assertEquals(h.getUsername(), "Dario Rossi");
     }
 
     @Test
