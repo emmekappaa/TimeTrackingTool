@@ -1,0 +1,219 @@
+/* Impostazioni di base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sfondo globale */
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Link di ritorno alla home */
+#back-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+#back-link:hover {
+    color: #0056b3;
+}
+
+/* Contenitore principale */
+.main-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Intestazione */
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+/* Tabella per i progetti */
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Header della tabella */
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Stile alternato per le righe della tabella */
+table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* Stile per i dati della tabella */
+td {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Hover sulle righe */
+table tbody tr:hover {
+    background-color: #e6f7ff;
+    transition: background-color 0.3s ease;
+}
+
+/* Titoli delle sezioni */
+h3 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+/* Stile per il form di aggiunta progetto */
+form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+form label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+form input, form select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #f9f9f9;
+}
+
+form select {
+    appearance: none; /* Per rimuovere lo stile predefinito del browser */
+}
+
+form input:focus, form select:focus {
+    border-color: #007BFF;
+    background-color: #ffffff;
+}
+
+/* Bottone di invio del form */
+button[type="submit"] {
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Placeholder per il select */
+option {
+    padding: 10px;
+}
+
+/* Stili per l'area di selezione dei ricercatori */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+select option {
+    font-size: 1rem;
+}
+
+/* Stili per la selezione multipla */
+select[multiple] {
+    height: auto; /* Permette al campo di adattarsi al contenuto */
+    min-height: 150px; /* Imposta un'altezza minima */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    overflow-y: auto; /* Aggiunge uno scroll se necessario */
+}
+
+select[multiple]:focus {
+    border-color: #007BFF;
+    background-color: #ffffff;
+    outline: none; /* Rimuove il bordo predefinito */
+}
+
+select[multiple] option {
+    padding: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+}
+
+select[multiple] option:hover {
+    background-color: #e6f7ff;
+    cursor: pointer;
+}
+
+/* Aggiunta di uno stile per la selezione attiva */
+select[multiple] option:checked {
+    background-color: #007BFF;
+    color: #fff;
+}
+

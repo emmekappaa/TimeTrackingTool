@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Researcher Projects</title>
+    <link rel="stylesheet" href="/style/projects.css">
+</head>
+<body>
+<!-- Link di ritorno alla home -->
+<a href="/homeResearcher" id="back-link">Back to Home</a>
+
+<!-- Contenitore principale -->
+<div class="main-container">
+    <header>
+        <h1>Your Projects</h1>
+    </header>
+
+    <!-- Progetti attivi -->
+    <h3>Active Projects</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Project Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${activeProjects}">
+            <td th:text="${project.name}">Project X</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Progetti in sospeso -->
+    <h3>Pending Projects</h3>
+
+    <!-- Verifica se ci sono progetti in sospeso -->
+    <div th:if="${pendingProjects != null and pendingProjects.size() > 0}">
+        <table>
+            <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pendingProject : ${pendingProjects}">
+                <td th:text="${pendingProject.project.name}">Project Y</td>
+                <td>
+                    <!-- Bottone per accettare -->
+                    <form th:action="@{/projectsResearcher/accept}" method="get">
+                        <input type="hidden" name="projectId" th:value="${pendingProject.id}" />
+                        <button class="accept-btn" type="submit">✔</button>
+                    </form>
+                    <!-- Bottone per rifiutare -->
+                    <form th:action="@{/projectsResearcher/decline}" method="get">
+                        <input type="hidden" name="projectId" th:value="${pendingProject.id}" />
+                        <button class="decline-btn" type="submit">✘</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Se non ci sono progetti pendenti, mostra un messaggio -->
+    <div th:if="${pendingProjects == null or pendingProjects.size() == 0}">
+        <p>No pending projects at the moment.</p>
+    </div>
+</div>
+</body>
+</html>

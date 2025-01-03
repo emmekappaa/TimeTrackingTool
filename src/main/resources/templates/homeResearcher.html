@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricercatore - Home</title>
+    <link rel="stylesheet" href="/style/homeR.css">
+</head>
+<body>
+<!-- Link di logout -->
+<a href="/homeResearcher/logout" id="logout-link">Logout</a>
+
+<!-- Contenitore principale -->
+<div class="main-container">
+    <!-- Intestazione -->
+    <header>
+        <h1>Welcome, <span id="username" th:text="${username}">Mario Rossi</span></h1>
+    </header>
+
+    <!-- Informazioni sulla data e meteo -->
+    <div class="info-container">
+        <h2 id="date" th:text="${todayDate}">27/12/2026</h2>
+    </div>
+
+    <!-- Sezione per messaggi di errore -->
+    <div th:if="${error != null}" style="color: red; font-weight: bold;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Tabella per registrare ore e progetti -->
+    <form action="/homeResearcher/addTimeLog" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>Hours Worked</th>
+                <th>Project</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="work-hours-table">
+            <tr>
+                <td><input id="hoursWorked" type="number" name="hoursWorked" min="1" max="24" step="1" placeholder="Hours" required></td>
+                <td>
+                    <select name="projectId" required>
+                        <option value="" disabled selected>Choose a project</option>
+                        <option th:each="project : ${researcherProjects}" th:value="${project.id}" th:text="${project.name}">Progetto X</option>
+                    </select>
+                </td>
+                <td><button type="submit">Add</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <!-- Tabella per le ore lavorate oggi -->
+    <h3>Hours Worked Today</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Project</th>
+            <th>Hours</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="timeLog : ${timeLogsToday}">
+            <td th:text="${timeLog.project.name}">Progetto X</td>
+            <td th:text="${timeLog.hoursWorked}">0</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Link nella parte inferiore -->
+    <div class="links-container">
+        <a href="/projectsResearcher" class="link">View Projects List</a>
+        <a href="/hoursHistory" class="link">History Hours</a>
+        <a href="/monthly/report" class="link">Monthly Reporting</a>
+    </div>
+</div>
+</body>
+</html>

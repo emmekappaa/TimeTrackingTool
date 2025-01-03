@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- Collegamento al file CSS esterno -->
+    <link rel="stylesheet" href="/style/login.css">
+</head>
+<body>
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        <input type="text" name="username" class="input-field" placeholder="Username" required>
+        <input type="password" name="password" class="input-field" placeholder="Password" required>
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+    <div class="error-message">
+        <!-- Example error message -->
+        <!-- <p>Invalid username or password.</p> -->
+    </div>
+</div>
+</body>
+</html>

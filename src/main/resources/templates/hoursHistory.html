@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hours History</title>
+    <link rel="stylesheet" href="/style/history.css">
+</head>
+<body>
+<form action="/hoursHistory/back" method="post" style="display: inline;">
+    <button type="submit" id="back-button">Back to Home</button>
+</form>
+
+<!-- Contenitore principale -->
+<div class="main-container">
+    <header>
+        <h1>Hours History</h1>
+    </header>
+
+    <!-- Sezione tabella -->
+    <table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Project</th>
+            <th>Hours Worked</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Ciclo per mostrare ogni elemento nella lista -->
+        <tr th:each="entry : ${timeLogs}">
+            <td th:text="${entry.date}">27/12/2026</td>
+            <td th:text="${entry.project.name}">Progetto X</td>
+            <td th:text="${entry.hoursWorked}">0</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
