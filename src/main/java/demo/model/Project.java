@@ -3,6 +3,8 @@ package demo.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
+
 @Entity
 public class Project {
 
@@ -43,7 +45,12 @@ public class Project {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
-        return id == project.id;
+        return Objects.equals(projectCode, project.projectCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode);
     }
 
     public long getId() {

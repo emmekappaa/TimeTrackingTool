@@ -2,6 +2,7 @@ package demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class TimeLog {
@@ -27,6 +28,19 @@ public class TimeLog {
         this.project = project;
         this.date = date;
         this.hoursWorked = hoursWorked;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TimeLog s = (TimeLog) o;
+        return person==s.person && date==s.date && project==s.project;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(person.username, date, project.getProjectCode());
     }
 
     public Long getId() {

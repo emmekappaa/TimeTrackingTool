@@ -59,7 +59,7 @@ public class Signature {
     }
 
     public void setManager(Manager m) {
-        this.manager = manager;
+        this.manager = m;
     }
 
     public Project getProject() {
@@ -107,12 +107,12 @@ public class Signature {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Signature s = (Signature) o;
-        return id == s.id;
+        return person==s.person && manager==s.manager && project==s.project && monthr==s.monthr && yearr==s.yearr;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(person.username, manager.username, project.getProjectCode(), monthr, yearr);
     }
 
 }
