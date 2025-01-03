@@ -66,7 +66,7 @@ public class ManagerProjectsController {
             @RequestParam String cup,
             @RequestParam String projectCode,
             @RequestParam String organizationName,
-            @RequestParam Long researcherId,
+            @RequestParam List<Long> researcherIds,
             HttpSession session) {
 
         Manager loggedInManager = (Manager) session.getAttribute("loggedInUser");
@@ -75,7 +75,14 @@ public class ManagerProjectsController {
             return "redirect:/";
         }
 
-        Researcher researcher = (Researcher) personRepository.findById(researcherId).orElse(null);
+        List<Researcher> researchers = new ArrayList<>();
+        for (Long id : researcherIds) {
+            Researcher researcher = (Researcher) personRepository.findById(id).orElse(null);
+            if (researcher != null) {
+                researchers.add(researcher);
+            }
+        }
+
         Project project = new Project(
                 name,
                 startDate,
@@ -91,9 +98,10 @@ public class ManagerProjectsController {
         projectRepository.save(project);
 
 
-        PendingProject pendingProject = new PendingProject(project,loggedInManager,researcher);
-
-        pendingrepo.save(pendingProject);
+        for (Researcher researcher : researchers) {
+            PendingProject pendingProject = new PendingProject(project, loggedInManager, researcher);
+            pendingrepo.save(pendingProject);
+        }
 
         return "redirect:/projectsManager";
     }

@@ -2,8 +2,10 @@ package demo.controller;
 
 import demo.model.Person;
 import demo.model.Project;
+import demo.model.Signature;
 import demo.model.TimeLog;
 import demo.repository.ProjectRepository;
+import demo.repository.SignatureRepository;
 import demo.repository.TimeLogRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +30,9 @@ public class HomeResearcherController {
 
     @Autowired
     private TimeLogRepository timeLogRepository;
+
+    @Autowired
+    private SignatureRepository sr;
 
     @RequestMapping("")
     public String homePage(HttpSession session, HttpServletResponse response, Model model) {
@@ -115,10 +120,16 @@ public class HomeResearcherController {
             }
             else
             {
+                Signature s = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser,project,today.getMonthValue(),today.getYear(),project.getManager()).orElse(null);
+                if(s == null){
+                    TimeLog timeLog = new TimeLog(loggedInUser, project, today, hoursWorked);
+                    timeLogRepository.save(timeLog);
+                    System.out.println("Aggiunte " + timeLog.getHoursWorked() + " ore al progetto " + project.getName());
+                }
+                else{
+                    redirectAttributes.addFlashAttribute("error", "You cannot log hours on an already signed project.");
+                }
 
-                TimeLog timeLog = new TimeLog(loggedInUser, project, today, hoursWorked);
-                timeLogRepository.save(timeLog);
-                System.out.println("Aggiunte " + timeLog.getHoursWorked() + " ore al progetto " + project.getName());
             }
         }
 

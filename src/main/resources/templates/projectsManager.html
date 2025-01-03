@@ -58,9 +58,8 @@
             <label for="organizationName">Organization Name:</label>
             <input type="text" id="organizationName" name="organizationName" required>
         </div>
-        <label for="researcherId">Assign to Researcher:</label>
-        <select id="researcherId" name="researcherId" required>
-            <option value="" disabled selected>Select a Researcher</option>
+        <label for="researcherIds">Assign to Researchers:</label>
+        <select id="researcherIds" name="researcherIds" multiple required>
             <option th:each="researcher : ${researchers}"
                     th:value="${researcher.id}"
                     th:text="${researcher.firstName} + ' ' + ${researcher.lastName}">

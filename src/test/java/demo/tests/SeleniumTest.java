@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -131,7 +132,10 @@ public class SeleniumTest extends BaseTest {
         mpp.enterCup("000111");
         mpp.enterProjectCode("123321");
         mpp.enterOrganizationName("UNIVR");
-        mpp.selectResearcher("Dario Rossi");
+        ArrayList<String> a = new ArrayList<>();
+        a.add("Dario Rossi");
+        a.add("Luigi Rossi");
+        mpp.selectResearchers(a);
         mpp.clickAssignProjectButton();
         assertTrue("Il progetto non è stato aggiunto correttamente.", mpp.isProjectPresent("Test"));
         hm = mpp.clickBackLink();

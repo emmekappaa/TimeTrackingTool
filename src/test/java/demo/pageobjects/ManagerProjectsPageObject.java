@@ -42,7 +42,7 @@ public class ManagerProjectsPageObject extends PageObject {
     @FindBy(id = "organizationName")
     private WebElement organizationNameInput;
 
-    @FindBy(id = "researcherId")
+    @FindBy(id = "researcherIds")
     private WebElement researcherDropdown;
 
     @FindBy(css = "button[type='submit']")
@@ -112,14 +112,15 @@ public class ManagerProjectsPageObject extends PageObject {
         organizationNameInput.sendKeys(organizationName);
     }
 
-    /**
-     * Seleziona un ricercatore dal menu a tendina.
-     * @param researcherName Nome del ricercatore.
-     */
-    public void selectResearcher(String researcherName) {
-        researcherDropdown.sendKeys(researcherName);
+    public void selectResearchers(List<String> researcherNames) {
+        // Usa la funzionalità della dropdown per selezionare più opzioni
+        for (String researcherName : researcherNames) {
+            researcherDropdown.findElements(By.tagName("option")).stream()
+                    .filter(option -> option.getText().equals(researcherName))
+                    .findFirst()
+                    .ifPresent(WebElement::click);
+        }
     }
-
     /**
      * Clicca sul pulsante per assegnare il progetto.
      */

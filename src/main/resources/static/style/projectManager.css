@@ -179,3 +179,41 @@ select {
 select option {
     font-size: 1rem;
 }
+
+/* Stili per la selezione multipla */
+select[multiple] {
+    height: auto; /* Permette al campo di adattarsi al contenuto */
+    min-height: 150px; /* Imposta un'altezza minima */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    overflow-y: auto; /* Aggiunge uno scroll se necessario */
+}
+
+select[multiple]:focus {
+    border-color: #007BFF;
+    background-color: #ffffff;
+    outline: none; /* Rimuove il bordo predefinito */
+}
+
+select[multiple] option {
+    padding: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+}
+
+select[multiple] option:hover {
+    background-color: #e6f7ff;
+    cursor: pointer;
+}
+
+/* Aggiunta di uno stile per la selezione attiva */
+select[multiple] option:checked {
+    background-color: #007BFF;
+    color: #fff;
+}
+
