@@ -53,10 +53,10 @@ public class ManagerTest {
         Manager anotherManager = new Manager("Jane", "Smith", "jsmith", "password456", "CF0987654321");
 
         // Verifica che due manager con lo stesso username siano considerati uguali
-        assertTrue(manager.equals(manager));
+        assertEquals(manager, manager);
 
         // Verifica che manager con username diversi non siano uguali
-        assertFalse(manager.equals(anotherManager));
+        assertNotEquals(manager, anotherManager);
     }
 
     @Test

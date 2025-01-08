@@ -3,7 +3,6 @@ package demo.controller;
 import demo.model.Researcher;
 import demo.repository.Repository;
 import demo.model.Person;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

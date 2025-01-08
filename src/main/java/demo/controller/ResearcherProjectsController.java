@@ -13,10 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.util.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -78,10 +76,7 @@ public class ResearcherProjectsController {
                 System.out.println(loggedInUser.getFirstName());
                 System.out.println("Salvato");
                 // Rimuovi il pending project
-                PendingProject pendingProject = pendingProjectrepo.findById(projectId).orElse(null);
-                if (pendingProject != null) {
-                    pendingProjectrepo.delete(pendingProject);
-                }
+                pendingProjectrepo.findById(projectId).ifPresent(pendingProject -> pendingProjectrepo.delete(pendingProject));
             }
         }
         return "redirect:/projectsResearcher";
@@ -90,10 +85,7 @@ public class ResearcherProjectsController {
     // Metodo per gestire il rifiuto del progetto
     @RequestMapping("/decline")
     public String declineProject(@RequestParam("projectId") Long projectId) {
-        PendingProject pendingProject = pendingProjectrepo.findById(projectId).orElse(null);
-        if (pendingProject != null) {
-            pendingProjectrepo.delete(pendingProject);
-        }
+        pendingProjectrepo.findById(projectId).ifPresent(pendingProject -> pendingProjectrepo.delete(pendingProject));
         return "redirect:/projectsResearcher";
     }
 
