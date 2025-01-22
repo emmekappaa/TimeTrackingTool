@@ -46,7 +46,6 @@ public class ReportController {
     @PostMapping("/sign")
     public String sign(@RequestParam(value = "selectedProject", required = false) String selectedProject,@RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year, HttpSession session) {
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
-        System.out.println("SING INVOKED" + selectedProject + month + year);
         LocalDate now = LocalDate.now();
         month = (month != null) ? month : now.getMonthValue();
         year = (year != null) ? year : now.getYear();
@@ -55,7 +54,6 @@ public class ReportController {
 
         Person selected = (Person) session.getAttribute("selectedUser");
 
-        System.out.println("VUOLE FIRMARE "  + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 
         if (selectedProject == null){
             for (Project p : projectRepository.findAll()) {
@@ -127,7 +125,6 @@ public class ReportController {
         }
 
 
-        System.out.println("salvato");
 
         assert project != null;
         return "redirect:/monthly/report?selectedProject=" + URLEncoder.encode(project.getName(), StandardCharsets.UTF_8) + "&month=" + month + "&year=" + year;
@@ -145,24 +142,16 @@ public class ReportController {
             return "redirect:/";
         }
 
-        System.out.println("PROVA");
         Boolean role = session.getAttribute("role").toString().equals("Manager");
         boolean queryAux = false;
-        System.out.println(role);
         if (role){
             loggedInUser = (Person) session.getAttribute("selectedUser");
-            System.out.println(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "DOPO");
             queryAux = loggedInUser instanceof Manager;
 
         }
 
-        System.out.println(role);
         model.addAttribute("manager", role);
-        System.out.println(selectedProject + " " + month + " " + year);
         Project project = projectRepository.findByName(selectedProject);
-        if (project != null) {
-            System.out.println(project.getName() + "test");
-        }
 
         if (project == null){
             for (Project p : projectRepository.findAll()) {

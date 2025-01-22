@@ -57,14 +57,11 @@ public class HomeResearcherController {
         String formattedDate = today.format(formatter);
         model.addAttribute("todayDate", formattedDate);
 
-        //System.out.println("loggato" + loggedInUser.getFirstName());
-
         // retrivo progetti a cui partecipa e li addo al model
         ArrayList<Project> researcherProjects = new ArrayList<>();
         for(Project p : pr.findAll()){
             if(p.getResearchers().contains(loggedInUser)){
                 researcherProjects.add(p);
-                System.out.println(p.getName());
             }
         }
         model.addAttribute("researcherProjects", researcherProjects);
@@ -80,14 +77,6 @@ public class HomeResearcherController {
         session.invalidate();
         return "redirect:/";
     }
-
-    /* inutile viene gia chiamata la pagina con il suo controllore
-    @RequestMapping("/hoursHistoryResearcher")
-    public String hoursHistory() {
-        System.out.println("QUI QUI");
-        return "/hoursHistoryResearcher";
-    }
-    */
 
     @PostMapping("/addTimeLog")
     public String addTimeLog(@RequestParam("hoursWorked") double hoursWorked, @RequestParam("projectId") long projectId, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -128,7 +117,6 @@ public class HomeResearcherController {
                 if(s == null){
                     TimeLog timeLog = new TimeLog(loggedInUser, project, today, hoursWorked);
                     timeLogRepository.save(timeLog);
-                    System.out.println("Aggiunte " + timeLog.getHoursWorked() + " ore al progetto " + project.getName());
                 }
                 else{
                     redirectAttributes.addFlashAttribute("error", "You cannot log hours on an already signed project.");

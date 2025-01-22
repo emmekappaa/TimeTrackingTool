@@ -43,10 +43,7 @@ public class ResearcherProjectsController {
 
         for (Project project : projectRepository.findAll()) {
             if (project.getResearchers().contains(loggedInUser)) {
-                System.out.println(loggedInUser.getFirstName());
                 activeProjects.add(project);
-                System.out.println(project.getName());
-
             }
         }
 
@@ -72,9 +69,6 @@ public class ResearcherProjectsController {
                 toAdd.setResearchers(r);
                 projectRepository.save(toAdd);
 
-                System.out.println("Salvato");
-                System.out.println(loggedInUser.getFirstName());
-                System.out.println("Salvato");
                 // Rimuovi il pending project
                 pendingProjectrepo.findById(projectId).ifPresent(pendingProject -> pendingProjectrepo.delete(pendingProject));
             }

@@ -32,7 +32,6 @@ public class HoursHistoryController {
     }
     @RequestMapping("")
     public String hoursHistory(HttpSession session, HttpServletResponse response, Model model){
-        System.out.println("hoursHistoryController");
         // disabilito cache, non voglio che la pagina rimani in memoria al browser
         response.setHeader("Cache-Control","no-store");
 

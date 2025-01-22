@@ -43,7 +43,6 @@ public class HomeManagerController {
         // disabilito cache non voglio che la pagina rimani in memoria al browser
         response.setHeader("Cache-Control","no-store");
 
-        //System.out.println("Sono in esecuzione");
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
         String role = (String) session.getAttribute("role");
         if (loggedInUser == null || !"Manager".equals(role)) {
@@ -63,7 +62,6 @@ public class HomeManagerController {
         for(Project p : pr.findAll()){
             if(p.getManager().equals(loggedInUser)){
                 managerProjects.add(p);
-                System.out.println(p.getName());
             }
         }
         model.addAttribute("managerProjects", managerProjects);
@@ -108,7 +106,6 @@ public class HomeManagerController {
         }
 
 
-        System.out.println(researcher.getFirstName() + " " + researcher.getLastName() + "PRIMA");
         session.setAttribute("selectedUser", researcher);
         //model.addAttribute("selectedUser", researcher);
 
@@ -156,7 +153,6 @@ public class HomeManagerController {
                 if(s == null){
                     TimeLog timeLog = new TimeLog(loggedInUser, project, today, hoursWorked);
                     timeLogRepository.save(timeLog);
-                    System.out.println("Aggiunte " + timeLog.getHoursWorked() + " ore al progetto " + project.getName());
                 }
                 else{
                     redirectAttributes.addFlashAttribute("error", "You cannot log hours on an already signed project.");
