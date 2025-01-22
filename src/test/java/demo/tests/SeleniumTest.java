@@ -4,7 +4,8 @@ import demo.pageobjects.*;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
+import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +31,19 @@ public class SeleniumTest extends BaseTest {
         h.selectProject("ProjectZomboide");
         h.clickAddTimeLog();
 
-        boolean timeLogAdded = h.getHoursWorkedTodayRows().stream()
-                .anyMatch(row -> row.getText().contains("ProjectZomboide") && row.getText().contains("4"));
-        assertTrue("Il time log non è stato aggiunto correttamente.", timeLogAdded);
+        LocalDate today =LocalDate.now();
+
+        if(today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY)
+        {
+            String errorMessage = h.getErrorMessage();
+            assertEquals("Logging hours is not allowed on weekends.", errorMessage);
+        }
+        else
+        {
+            boolean timeLogAdded = h.getHoursWorkedTodayRows().stream()
+                    .anyMatch(row -> row.getText().contains("ProjectZomboide") && row.getText().contains("4"));
+            assertTrue("Il time log non è stato aggiunto correttamente.", timeLogAdded);
+        }
     }
 
     @Test
@@ -109,16 +120,27 @@ public class SeleniumTest extends BaseTest {
         hm.selectProject("Startx");
         hm.clickAddTimeLog();
 
-        boolean timeLogAdded = hm.getHoursWorkedTodayRows().stream()
-                .anyMatch(row -> row.getText().contains("Startx") && row.getText().contains("3"));
-        assertTrue("Il time log non è stato aggiunto correttamente.", timeLogAdded);
+        LocalDate today =LocalDate.now();
 
-        hm.enterHoursWorked("6");
-        hm.selectProject("ProjectZomboide");
-        hm.clickAddTimeLog();
+        if(today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY)
+        {
+            String errorMessage = hm.getErrorMessage();
+            assertEquals("Logging hours is not allowed on weekends.", errorMessage);
+        }
+        else
+        {
+            boolean timeLogAdded = hm.getHoursWorkedTodayRows().stream()
+                    .anyMatch(row -> row.getText().contains("Startx") && row.getText().contains("3"));
+            assertTrue("Il time log non è stato aggiunto correttamente.", timeLogAdded);
 
-        String errorMessage = hm.getErrorMessage();
-        assertEquals("You cannot log more than 8 working hours in a day.", errorMessage);
+            hm.enterHoursWorked("6");
+            hm.selectProject("ProjectZomboide");
+            hm.clickAddTimeLog();
+
+            String errorMessage = hm.getErrorMessage();
+            assertEquals("You cannot log more than 8 working hours in a day.", errorMessage);
+        }
+
     }
 
     @Test
@@ -158,13 +180,25 @@ public class SeleniumTest extends BaseTest {
         h.enterHoursWorked("1");
         h.selectProject("Marketprog");
         h.clickAddTimeLog();
-        HoursHistoryPageObject h1 = h.clickHistoryHoursLink();
-        List<WebElement> historyRows = h1.getTableRows();
 
-        boolean timeLogFound = historyRows.stream()
-                .anyMatch(row -> row.getText().contains("Marketprog") && row.getText().contains("1"));
+        LocalDate today =LocalDate.now();
 
-        assertTrue("Il time log con 1 ore non è stato aggiunto correttamente nella cronologia.", timeLogFound);
+        if(today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY)
+        {
+            String errorMessage = h.getErrorMessage();
+            assertEquals("Logging hours is not allowed on weekends.", errorMessage);
+        }
+        else
+        {
+            HoursHistoryPageObject h1 = h.clickHistoryHoursLink();
+            List<WebElement> historyRows = h1.getTableRows();
+
+            boolean timeLogFound = historyRows.stream()
+                    .anyMatch(row -> row.getText().contains("Marketprog") && row.getText().contains("1"));
+
+            assertTrue("Il time log con 1 ore non è stato aggiunto correttamente nella cronologia.", timeLogFound);
+        }
+
     }
 
 

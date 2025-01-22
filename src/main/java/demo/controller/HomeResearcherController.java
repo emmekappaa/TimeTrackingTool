@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -104,6 +105,15 @@ public class HomeResearcherController {
             {
                 totalHoursWorkedToday+= t.getHoursWorked();
             }
+
+            //controllo che non sia il fine settimana
+            if(today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY){
+                redirectAttributes.addFlashAttribute("error", "Logging hours is not allowed on weekends.");
+                ArrayList<TimeLog> timeLogsToday = new ArrayList<>(timeLogRepository.findAllByPersonAndDate(loggedInUser, today));
+                redirectAttributes.addFlashAttribute("timeLogsToday", timeLogsToday);
+                return "redirect:/homeResearcher";
+            }
+
 
             if (totalHoursWorkedToday + hoursWorked > 8) {
 
