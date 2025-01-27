@@ -85,8 +85,8 @@ public class TimeLogTest {
         TimeLog sameTimeLog = new TimeLog(person, project, date, 8.0);
         TimeLog differentTimeLog = new TimeLog(person, project, LocalDate.of(2025, 2, 1), 8.0);
 
-        assertTrue(timeLog.equals(sameTimeLog));
-        assertFalse(timeLog.equals(differentTimeLog));
+        assertEquals(timeLog, sameTimeLog);
+        assertNotEquals(timeLog, differentTimeLog);
     }
 
     @Test

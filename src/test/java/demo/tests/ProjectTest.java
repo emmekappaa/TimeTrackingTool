@@ -92,8 +92,8 @@ public class ProjectTest {
                 "CUP003"
         );
 
-        assertTrue(project.equals(sameProject));
-        assertFalse(project.equals(differentProject));
+        assertEquals(project, sameProject);
+        assertNotEquals(project, differentProject);
     }
 
     @Test

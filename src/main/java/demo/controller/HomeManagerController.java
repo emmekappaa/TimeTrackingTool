@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.DayOfWeek;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,7 +43,6 @@ public class HomeManagerController {
         // disabilito cache non voglio che la pagina rimani in memoria al browser
         response.setHeader("Cache-Control","no-store");
 
-        //System.out.println("Sono in esecuzione");
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
         String role = (String) session.getAttribute("role");
         if (loggedInUser == null || !"Manager".equals(role)) {
@@ -62,7 +62,6 @@ public class HomeManagerController {
         for(Project p : pr.findAll()){
             if(p.getManager().equals(loggedInUser)){
                 managerProjects.add(p);
-                System.out.println(p.getName());
             }
         }
         model.addAttribute("managerProjects", managerProjects);
@@ -80,11 +79,7 @@ public class HomeManagerController {
         researchers.set(researchers.size()-1, aux);
         model.addAttribute("researchers", researchers);
 
-
-        ArrayList<TimeLog> timeLogsToday = new ArrayList<>();
-        for (TimeLog t : timeLogRepository.findAllByPersonAndDate(loggedInUser, today)) {
-            timeLogsToday.add(t);
-        }
+        ArrayList<TimeLog> timeLogsToday = new ArrayList<>(timeLogRepository.findAllByPersonAndDate(loggedInUser, today));
         model.addAttribute("timeLogsToday", timeLogsToday);
 
         return "homeManager";
@@ -104,14 +99,13 @@ public class HomeManagerController {
 
         // Recupera il ricercatore selezionato
 
-        Person researcher = (Person) repo.findById(researcherId).orElse(null);
+        Person researcher = repo.findById(researcherId).orElse(null);
         if (researcher == null) {
             model.addAttribute("error", "Researcher not found.");
             return "homeManager";
         }
 
 
-        System.out.println(researcher.getFirstName() + " " + researcher.getLastName() + "PRIMA");
         session.setAttribute("selectedUser", researcher);
         //model.addAttribute("selectedUser", researcher);
 
@@ -122,7 +116,7 @@ public class HomeManagerController {
 
 
     @PostMapping("/addTimeLog")
-    public String addTimeLog(@RequestParam("hoursWorked") double hoursWorked, @RequestParam("projectId") long projectId, HttpSession session, Model model, RedirectAttributes redirectAttributes){
+    public String addTimeLog(@RequestParam("hoursWorked") double hoursWorked, @RequestParam("projectId") long projectId, HttpSession session, RedirectAttributes redirectAttributes){
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
         Project project = pr.findById(projectId).orElse(null);
 
@@ -137,13 +131,19 @@ public class HomeManagerController {
                 totalHoursWorkedToday+= t.getHoursWorked();
             }
 
+            //controllo che non sia il fine settimana
+            if(today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY){
+                redirectAttributes.addFlashAttribute("error", "Logging hours is not allowed on weekends.");
+                ArrayList<TimeLog> timeLogsToday = new ArrayList<>(timeLogRepository.findAllByPersonAndDate(loggedInUser, today));
+                redirectAttributes.addFlashAttribute("timeLogsToday", timeLogsToday);
+                return "redirect:/homeManager";
+            }
+
+
             if (totalHoursWorkedToday + hoursWorked > 8) {
 
                 redirectAttributes.addFlashAttribute("error", "You cannot log more than 8 working hours in a day.");
-                ArrayList<TimeLog> timeLogsToday = new ArrayList<>();
-                for (TimeLog t : timeLogRepository.findAllByPersonAndDate(loggedInUser, today)) {
-                    timeLogsToday.add(t);
-                }
+                ArrayList<TimeLog> timeLogsToday = new ArrayList<>(timeLogRepository.findAllByPersonAndDate(loggedInUser, today));
                 redirectAttributes.addFlashAttribute("timeLogsToday", timeLogsToday);
                 return "redirect:/homeManager";
             }
@@ -153,7 +153,6 @@ public class HomeManagerController {
                 if(s == null){
                     TimeLog timeLog = new TimeLog(loggedInUser, project, today, hoursWorked);
                     timeLogRepository.save(timeLog);
-                    System.out.println("Aggiunte " + timeLog.getHoursWorked() + " ore al progetto " + project.getName());
                 }
                 else{
                     redirectAttributes.addFlashAttribute("error", "You cannot log hours on an already signed project.");
@@ -162,10 +161,7 @@ public class HomeManagerController {
         }
 
         LocalDate today = LocalDate.now();
-        ArrayList<TimeLog> timeLogsToday = new ArrayList<>();
-        for (TimeLog t : timeLogRepository.findAllByPersonAndDate(loggedInUser, today)) {
-            timeLogsToday.add(t);
-        }
+        ArrayList<TimeLog> timeLogsToday = new ArrayList<>(timeLogRepository.findAllByPersonAndDate(loggedInUser, today));
         redirectAttributes.addFlashAttribute("timeLogsToday", timeLogsToday);
         return "redirect:/homeManager";
 

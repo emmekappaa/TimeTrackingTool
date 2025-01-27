@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +33,9 @@ public class ReportController {
     private SignatureRepository sr;
 
     @PostMapping("/back")
-    public String back(HttpSession session, Model model) {
+    public String back(HttpSession session) {
 
-        Boolean role = session.getAttribute("role").toString().equals("Manager");
+        boolean role = session.getAttribute("role").toString().equals("Manager");
         if (role) {
             return "redirect:/homeManager";
         }else {
@@ -47,16 +46,14 @@ public class ReportController {
     @PostMapping("/sign")
     public String sign(@RequestParam(value = "selectedProject", required = false) String selectedProject,@RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "year", required = false) Integer year, HttpSession session) {
         Person loggedInUser = (Person) session.getAttribute("loggedInUser");
-        System.out.println("SING INVOKED" + selectedProject + month + year);
         LocalDate now = LocalDate.now();
         month = (month != null) ? month : now.getMonthValue();
         year = (year != null) ? year : now.getYear();
-        Boolean role = session.getAttribute("role").toString().equals("Manager");
+        boolean role = session.getAttribute("role").toString().equals("Manager");
         Project project = null;
 
         Person selected = (Person) session.getAttribute("selectedUser");
 
-        System.out.println("VUOLE FIRMARE "  + loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
 
         if (selectedProject == null){
             for (Project p : projectRepository.findAll()) {
@@ -113,6 +110,7 @@ public class ReportController {
         }
         else //sono un ricercatore
         {
+            assert project != null;
             Signature tmp = sr.findByPersonAndProjectAndMonthrAndYearrAndManager(loggedInUser,project, month,year,project.getManager()).orElse(null);
             if(tmp != null){
                 tmp.setSignR();
@@ -127,8 +125,8 @@ public class ReportController {
         }
 
 
-        System.out.println("salvato");
 
+        assert project != null;
         return "redirect:/monthly/report?selectedProject=" + URLEncoder.encode(project.getName(), StandardCharsets.UTF_8) + "&month=" + month + "&year=" + year;
 
 
@@ -144,24 +142,16 @@ public class ReportController {
             return "redirect:/";
         }
 
-        System.out.println("PROVA");
         Boolean role = session.getAttribute("role").toString().equals("Manager");
-        Boolean queryAux = false;
-        System.out.println(role);
+        boolean queryAux = false;
         if (role){
             loggedInUser = (Person) session.getAttribute("selectedUser");
-            System.out.println(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "DOPO");
             queryAux = loggedInUser instanceof Manager;
 
         }
 
-        System.out.println(role);
         model.addAttribute("manager", role);
-        System.out.println(selectedProject + " " + month + " " + year);
         Project project = projectRepository.findByName(selectedProject);
-        if (project != null) {
-            System.out.println(project.getName() + "test");
-        }
 
         if (project == null){
             for (Project p : projectRepository.findAll()) {
@@ -184,7 +174,7 @@ public class ReportController {
             }
         }
 
-        ArrayList<Project> allProjects = new ArrayList<>();
+        ArrayList<Project> allProjects;
 
         if (role){
 
@@ -234,8 +224,9 @@ public class ReportController {
             }
         }
 
-        ArrayList<Project> otherProjectsWithSameOrganization = new ArrayList<>();
+        ArrayList<Project> otherProjectsWithSameOrganization;
 
+        assert project != null;
         if (role){
             if (queryAux){
                 otherProjectsWithSameOrganization = projectRepository.findByManagerAndOrganizationName((Manager)loggedInUser, project.getOrganizationName());
@@ -317,28 +308,8 @@ public class ReportController {
     }
 
 
-
-    static class DayData {
-        private int day;
-        private double projectHours;
-        private double otherProjectsHours;
-        private double otherProjectsHoursSameOrganization;
-        private double totalHours;
-
-        public DayData(int day, double projectHours, double otherProjectsHours, double otherProjectsHoursSameOrganization, double totalHours) {
-            this.day = day;
-            this.projectHours = projectHours;
-            this.otherProjectsHours = otherProjectsHours;
-            this.otherProjectsHoursSameOrganization = otherProjectsHoursSameOrganization;
-            this.totalHours = totalHours;
-        }
-
-        // Getters
-        public int getDay() { return day; }
-        public double getProjectHours() { return projectHours; }
-        public double getOtherProjectsHours() { return otherProjectsHours; }
-        public double getTotalHours() { return totalHours; }
-        public double getOtherProjectsHoursSameOrganization() { return otherProjectsHoursSameOrganization; }
+    record DayData(int day, double projectHours, double otherProjectsHours, double otherProjectsHoursSameOrganization,
+                   double totalHours) {
     }
 
 }

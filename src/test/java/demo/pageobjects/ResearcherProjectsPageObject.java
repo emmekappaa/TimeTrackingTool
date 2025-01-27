@@ -55,10 +55,7 @@ public class ResearcherProjectsPageObject extends PageObject {
     public boolean arePendingProjectThere() {
 
         List<WebElement> noProjectsMessage = driver.findElements(By.xpath("//*[text()='No pending projects at the moment.']"));
-        if (noProjectsMessage.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !noProjectsMessage.isEmpty();
     }
 
     /**

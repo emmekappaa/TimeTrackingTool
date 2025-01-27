@@ -106,8 +106,8 @@ public class SignatureTest {
         Signature sameSignature = new Signature(person, manager, project, 1, 2025);
         Signature differentSignature = new Signature(person, manager, project, 2, 2025);
 
-        assertTrue(signature.equals(sameSignature));
-        assertFalse(signature.equals(differentSignature));
+        assertEquals(signature, sameSignature);
+        assertNotEquals(signature, differentSignature);
     }
 
     @Test
