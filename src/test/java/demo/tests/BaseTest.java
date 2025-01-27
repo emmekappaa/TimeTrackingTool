@@ -18,8 +18,10 @@ public abstract class BaseTest {
     @Before
     public void setUp() {
         WebDriverManager manager = WebDriverManager.firefoxdriver();
-        if (driver == null)
+        if (driver == null) {
             driver = manager.create();
+            driver.manage().window().setSize(new org.openqa.selenium.Dimension(1920, 1080));
+        }
     }
 
     @After
