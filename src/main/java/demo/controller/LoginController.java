@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 @Controller
@@ -26,7 +28,7 @@ public class LoginController {
 
         Person person = repository.findByUsername(username);
 
-        if (person == null || !person.getPassword().equals(password)) {
+        if (person == null || !person.getPassword().equals(calculateMD5(password))) {
             model.addAttribute("errorMessage", "Invalid username or password.");
             return "login";
         }
@@ -41,5 +43,25 @@ public class LoginController {
             return "redirect:/homeManager";
         }
 
+    }
+
+    // Metodo per calcolare l'hash MD5
+    private String calculateMD5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            // Converti il byte array in formato esadecimale
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

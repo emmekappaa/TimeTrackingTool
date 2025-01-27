@@ -105,13 +105,22 @@ Test che verifica il funzionamento del sistema di creazione, assegnazione e acce
 Test che verifica la corretta visualizzazione dello storico delle ore. Scenari coinvolti: 5
 
 Sono stati scritti inoltre numerosi test di unità sfruttando la libreria JUnit, utilizzati per verificare e garantire il funzionamento dei metodi e delle classi utilizzate all'interno dell'applicazione.
-Successivamente per verificare la coverage (copertura) del codice scritto è stato utilizzato il tool built-in dell'IDE IntelliJ raggiungendo i seeguenti risultati:
+Successivamente per verificare la coverage (copertura) del codice scritto è stato utilizzato il tool built-in dell'IDE IntelliJ raggiungendo i seguenti risultati:
 
 ![Code Coverage](/images/coverage_intellij.png "Code Coverage")
+
+## Guida all'utilizzo
+
+Per poter utilizzare l'applicazione e verificare il suo funzionamento e gli scenari, sono a disposizione i seguenti account:
+- Responsabile Scientifico Franco Verdi, username = root, password = root;
+- Ricercatore Dario Rossi, username = user, password = user;
+- Ricercatore Luigi Rossi, username = user1, password = user1;
+
+L'account Dario Rossi presenta già alcuni TimeLog pre-inseriti fino a data 26/01/2025.
+L'account Luigi Rossi non presenta alcun TimeLog, è stato utilizzato per verificare il funzionamento del sistema di assegnazione dei progetti.
 
 
 ## Autori
 
-- Alessandro Aldegheri
-- Michele Cipriani
-- Venturi Davide
+- Alessandro Aldegheri VR519407
+- Michele Cipriani VR516307
