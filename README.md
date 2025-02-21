@@ -1,126 +1,132 @@
 # Time Tracking Tool
 
-## Descrizione del sistema
+## System Description
 
-Il Time Tracking Tool è una piattaforma progettata per supportare ricercatori e responsabili scientifici nella gestione e nel monitoraggio di progetti di ricerca.
-Il sistema facilita la rendicontazione delle ore di lavoro e la gestione dei progetti.
+The Time Tracking Tool is a platform designed to support researchers and scientific managers in managing and monitoring research projects.  
+The system facilitates the reporting of working hours and project management.
 
-## Obiettivi del sistema
+## System Objectives
 
-Il Time Tracking Tool è progettato per automatizzare e semplificare il processo di gestione delle ore lavorative dei progetti di ricerca e dell'assegnamento di questi ultimi a nuovi ricercatori.
-Il sistema deve fornire un'interfaccia intuitiva e facile da usare per gli utenti.
+The Time Tracking Tool is designed to automate and simplify the process of managing working hours for research projects and assigning them to new researchers.  
+The system must provide an intuitive and user-friendly interface.
 
-Il sistema deve supportare le seguenti funzionalità principali:
+The system must support the following main functionalities:
 
-- Gestione delle ore giornaliere
-- Visualizzazione report mensili
-- Assegnazione progetti a ricercatori
-- Storico ore lavorate
-- Firma report ore mensili di un progetto
+- Daily time log management
+- Monthly report visualization
+- Project assignment to researchers
+- Work hour history tracking
+- Monthly report signing for a project
 
-## Glossario
+## Glossary
 
-- Ricercatore (Researcher): utente che partecipa ai progetti e registra le ore lavorate
-- Responsabile Scientifico (Manager): utente che partecipa ai progetti, assegna progetti ai ricercatori e ne monitora le ore mensili
-- Report: visualizzazione delle ore lavorate su un progetto per specifico mese
-- Firma: approvazione mediante firma delle ore lavorate relative ad un progetto e ad un mese specifico
-- TimeLog: registrazione di ore lavorative relative ad una giornata e ad un progetto realizzate da un ricercatore/responsabile scientifico
+- **Researcher**: A user who participates in projects and logs working hours.
+- **Scientific Manager**: A user who participates in projects, assigns projects to researchers, and monitors their monthly hours.
+- **Report**: A visualization of the hours worked on a project for a specific month.
+- **Signature**: Approval via signature of the hours worked related to a specific project and month.
+- **TimeLog**: A record of working hours related to a day and a project, logged by a researcher/scientific manager.
 
-## Scenari
+## Scenarios
 
-### 1. Autenticazione nel sistema e Registrazione TimeLog (Ricercatore)
+### 1. System Authentication and TimeLog Registration (Researcher)
 
-Il sistema deve permettere al Ricercatore di autenticarsi e successivamente di registrare i suoi TimeLog giornalieri
+The system must allow the Researcher to authenticate and subsequently log their daily TimeLogs.
 
-### 2. Visualizza e Firma di Report (Ricercatore)
+### 2. View and Sign Report (Researcher)
 
-Il sistema deve permettere ad un Ricercatore di visualizzare e firmare le ore relativamente ad un progetto su base mensile
+The system must allow a Researcher to view and sign the hours related to a project on a monthly basis.
 
-### 3. Visualizza e Firma di Report (Responsabile Scientifico)
+### 3. View and Sign Report (Scientific Manager)
 
-Il sistema deve permettere al Responsabile Scientifico di firmare e dunque approvare i report dei ricercatori
+The system must allow the Scientific Manager to sign and thus approve the researchers' reports.
 
-### 4. Gestione di una Registrazione Errata di un TimeLog
+### 4. Handling Incorrect TimeLog Entries
 
-Il sistema deve verificare la registrazione di un TimeLog con un numero di ore lavorative superiore alle 8
+The system must verify the registration of a TimeLog with a number of working hours exceeding 8.
 
-### 5. Consultazione Storico Ore
+### 5. Work Hours History Consultation
 
-Il sistema deve offrire uno storico delle ore lavorative registrate
+The system must provide a history of recorded working hours.
 
-### 6. Autenticazione nel sistema e Registrazione TimeLog (Responsabile Scientifico)
+### 6. System Authentication and TimeLog Registration (Scientific Manager)
 
-Il sistema deve permettere al Responsabile Scientifico di autenticarsi e successivamente di registrare i suoi TimeLog giornalieri
+The system must allow the Scientific Manager to authenticate and subsequently log their daily TimeLogs.
 
-### 7. Creazione di un Progetto e Assegnazione Ricercatori
+### 7. Project Creation and Researcher Assignment
 
-Il sistema deve permettere al Responsabile Scientifico di creare un nuovo progetto e quindi assegnarlo a determinati Ricercatori scelti
+The system must allow the Scientific Manager to create a new project and assign it to selected Researchers.
 
-### 8. Rifiuto di un Progetto
+### 8. Project Rejection
 
-Il sistema deve fornire la possibilità ai Ricercatori di rifiutare un progetto assegnatogli da parte del Responsabile Scientifico
+The system must allow Researchers to reject a project assigned by the Scientific Manager.
 
-### 9. Accettazione di un Progetto
+### 9. Project Acceptance
 
-Il sistema deve fornire la possibilità ai Ricercatori di accettare un progetto assegnatogli da parte del Responsabile Scientifico
+The system must allow Researchers to accept a project assigned by the Scientific Manager.
 
-## Permessi
+## Permissions
 
-- Creazione Progetti: Responsabile Scientifico
-- Lettura Progetti: Responsabile Scientifico, Ricercatore
-- Creazione TimeLog: Responsabile Scientifico, Ricercatore
-- Lettura TimeLog: Responsabile Scientifico, Ricercatore
-- Lettura Report: Responsabile Scientifico, Ricercatore
+- **Project Creation**: Scientific Manager
+- **Project Read**: Scientific Manager, Researcher
+- **TimeLog Creation**: Scientific Manager, Researcher
+- **TimeLog Read**: Scientific Manager, Researcher
+- **Report Read**: Scientific Manager, Researcher
 
-## Test e Qualità del codice
+## Testing and Code Quality
 
-Per verificare il funzionamento e l'interazione dei componenti del sistema sono stati svolti i seguenti test di Sistema utilizzando la libreria Selenium:
+To verify the system's functionality and component interaction, the following System Tests were conducted using the Selenium library:
 
-### testLoginAsResearcher
+### `testLoginAsResearcher`
 
-Test che verifica l'autenticazione di un utente Ricercatore. Coinvolge tutte gli scenari riguardanti il Ricercatore
+A test that verifies the authentication of a Researcher user. It involves all scenarios related to the Researcher.
 
-### testAddTimeLog
+### `testAddTimeLog`
 
-Test che verifica l'aggiunta di un TimeLog regolare da parte di un utente Ricercatore. Scenari coinvolti: 1
+A test that verifies the addition of a valid TimeLog by a Researcher.  
+**Involved scenarios**: 1.
 
-### testErrorOnExceedingMaxHours
+### `testErrorOnExceedingMaxHours`
 
-Test che verifica l'apparizione di un messaggio di errore in caso di aggiunta di un TimeLog errato. Scenari coinvolti: 4
+A test that verifies the appearance of an error message when attempting to add an invalid TimeLog.  
+**Involved scenarios**: 4.
 
-### testMonthlyReport
+### `testMonthlyReport`
 
-Test che verifica il funzionamento del sistema di gestione dei report mensili. Scenari coinvolti: Scenari coinvolti: 2,3
+A test that verifies the functionality of the monthly report management system.  
+**Involved scenarios**: 2, 3.
 
-### testManagerFlow
+### `testManagerFlow`
 
-Test che verifica l'aggiunta corretta ed errata di un TimeLog da parte di un utente Responsabile Scientifico. Scenari coinvolti: 6
+A test that verifies the correct and incorrect addition of a TimeLog by a Scientific Manager.  
+**Involved scenarios**: 6.
 
-### testResearcherAcceptsPendingProject
+### `testResearcherAcceptsPendingProject`
 
-Test che verifica il funzionamento del sistema di creazione, assegnazione e accettazione di un nuovo Progetto. Scenari coinvolti: 7, 8, 9
+A test that verifies the creation, assignment, and acceptance of a new project.  
+**Involved scenarios**: 7, 8, 9.
 
-### testAddTwoHoursAndVerifyInHistory
+### `testAddTwoHoursAndVerifyInHistory`
 
-Test che verifica la corretta visualizzazione dello storico delle ore. Scenari coinvolti: 5
+A test that verifies the correct display of the work hour history.  
+**Involved scenarios**: 5.
 
-Sono stati scritti inoltre numerosi test di unità sfruttando la libreria JUnit, utilizzati per verificare e garantire il funzionamento dei metodi e delle classi utilizzate all'interno dell'applicazione.
-Successivamente per verificare la coverage (copertura) del codice scritto è stato utilizzato il tool built-in dell'IDE IntelliJ raggiungendo i seguenti risultati:
+Additionally, numerous unit tests were written using the JUnit library to verify and ensure the functionality of the methods and classes used within the application.  
+Subsequently, to check the coverage of the written code, the built-in tool of the IntelliJ IDE was used, achieving the following results:
 
 ![Code Coverage](/images/coverage_intellij.png "Code Coverage")
 
-## Guida all'utilizzo
+## User Guide
 
-Per poter utilizzare l'applicazione e verificare il suo funzionamento e gli scenari, sono a disposizione i seguenti account:
-- Responsabile Scientifico Franco Verdi, username = root, password = root;
-- Ricercatore Dario Rossi, username = user, password = user;
-- Ricercatore Luigi Rossi, username = user1, password = user1;
+To use the application and verify its functionality and scenarios, the following accounts are available:
 
-L'account Dario Rossi presenta già alcuni TimeLog pre-inseriti fino a data 26/01/2025.
-L'account Luigi Rossi non presenta alcun TimeLog, è stato utilizzato per verificare il funzionamento del sistema di assegnazione dei progetti.
+- **Scientific Manager** Franco Verdi, `username = root`, `password = root`;
+- **Researcher** Dario Rossi, `username = user`, `password = user`;
+- **Researcher** Luigi Rossi, `username = user1`, `password = user1`;
 
+The account **Dario Rossi** already has some pre-entered TimeLogs up to the date **26/01/2025**.  
+The account **Luigi Rossi** has no TimeLogs and has been used to verify the functionality of the project assignment system.
 
-## Autori
+## Authors
 
-- Alessandro Aldegheri VR519407
-- Michele Cipriani VR516307
+- **Alessandro Aldegheri** VR519407
+- **Michele Cipriani** VR516307
