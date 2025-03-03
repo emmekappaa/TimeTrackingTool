@@ -129,6 +129,12 @@ To use the application and verify its functionality and scenarios, the following
 The account **Dario Rossi** already has some pre-entered TimeLogs up to the date **26/01/2025**.  
 The account **Luigi Rossi** has no TimeLogs and has been used to verify the functionality of the project assignment system.
 
+![login](https://github.com/user-attachments/assets/5ffb80f9-b936-47c3-b92a-d39fdcd3e263)
+
+![home](https://github.com/user-attachments/assets/d5bb82f7-bcba-46c5-aff3-3990551f0c1b)
+
+
+
 ## Authors
 
 - **Alessandro Aldegheri** VR519407
